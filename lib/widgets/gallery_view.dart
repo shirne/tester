@@ -58,6 +58,7 @@ class _GalleryViewState extends State<GalleryView>
 
   // 当前显示的每行数量，缩放过程中会保持比当前屏幕大一个
   int _rowCount = 4;
+  int _lastRowCount = 4;
 
   // 缩放结束时计算的每行数量
   int _realCount = 4;
@@ -94,6 +95,7 @@ class _GalleryViewState extends State<GalleryView>
     }
 
     if (newCount != _rowCount) {
+      _lastRowCount = _rowCount;
       double viewScale = _rowCount / newCount;
       _lastScale *= viewScale;
       absScale = absScale / viewScale;
@@ -108,6 +110,7 @@ class _GalleryViewState extends State<GalleryView>
   _onTicker() {
     if (_controller.value == 1) {
       setState(() {
+        _lastRowCount = _rowCount;
         _rowCount = _realCount;
         _lastScale = 1;
         _scale = 1;
@@ -136,6 +139,24 @@ class _GalleryViewState extends State<GalleryView>
     _controller.animateTo(1);
   }
 
+  Widget previousChild(int index) {
+    int row = index ~/ _rowCount;
+    int col = index % _rowCount;
+    int lastIndex = row * _lastRowCount + col;
+    return childAt(lastIndex);
+  }
+
+  Widget childAt(int index) {
+    if (index >= widget.itemCount) {
+      return Container(
+        color: Colors.transparent,
+      );
+    }
+    return widget.itemBuilder != null
+        ? widget.itemBuilder!(context, index)
+        : widget.children![index];
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -161,14 +182,15 @@ class _GalleryViewState extends State<GalleryView>
           itemBuilder: (context, index) {
             return AnimatedSwitcher(
               duration: widget.duration,
-              switchInCurve: Curves.linear,
+              switchInCurve: widget.curve,
               switchOutCurve: Curves.linear,
               // 默认layout小图片不会铺满
               layoutBuilder: (widget, widgets) {
                 return Stack(
                   fit: StackFit.expand,
                   children: [
-                    ...widgets,
+                    // 不知道为何widgets中的元素不是旧的，好像也是新的
+                    if (widgets.length > 0) previousChild(index),
                     if (widget != null) widget,
                   ],
                 );
