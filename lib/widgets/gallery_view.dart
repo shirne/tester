@@ -18,7 +18,7 @@ class GalleryView extends StatefulWidget {
     required this.children,
     this.minPerRow = 1,
     this.maxPerRow = 10,
-    this.duration = const Duration(milliseconds: 400),
+    this.duration = const Duration(milliseconds: 800),
     this.curve = Curves.easeOutQuad,
   })  : assert(children != null),
         itemBuilder = null,
@@ -84,6 +84,15 @@ class _GalleryViewState extends State<GalleryView>
     double absScale = newScale / _lastScale;
 
     int newCount = (_rowCount / absScale).ceil();
+
+    // 限制最小缩放
+    if (newCount >= widget.maxPerRow) {
+      newCount = widget.maxPerRow;
+      if (absScale < 1) {
+        absScale = 1;
+      }
+    }
+
     if (newCount != _rowCount) {
       double viewScale = _rowCount / newCount;
       _lastScale *= viewScale;
@@ -118,7 +127,7 @@ class _GalleryViewState extends State<GalleryView>
     _targetScale = _rowCount / _realCount;
     _lastScale = _scale;
 
-    // 最终缩放值与当前值接近时，截取耗时
+    // 最终缩放值与当前值接近时，截取动画时长
     double percent = min(1, (_scale - _targetScale).abs());
 
     _controller.duration = Duration(
@@ -151,15 +160,24 @@ class _GalleryViewState extends State<GalleryView>
           ),
           itemBuilder: (context, index) {
             return AnimatedSwitcher(
-              key:ValueKey<int>(index),
               duration: widget.duration,
-              switchInCurve: widget.curve,
-              switchOutCurve: widget.curve,
-              child:Container(
-                key:Key("${index~/_rowCount}-${index%_rowCount}"),
+              switchInCurve: Curves.linear,
+              switchOutCurve: Curves.linear,
+              // 默认layout小图片不会铺满
+              layoutBuilder: (widget, widgets) {
+                return Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    ...widgets,
+                    if (widget != null) widget,
+                  ],
+                );
+              },
+              child: Container(
+                key: _ItemKey(index, _rowCount, widget.maxPerRow),
                 child: widget.itemBuilder != null
-                  ? widget.itemBuilder!(context, index)
-                  : widget.children![index],
+                    ? widget.itemBuilder!(context, index)
+                    : widget.children![index],
               ),
             );
           },
@@ -167,4 +185,10 @@ class _GalleryViewState extends State<GalleryView>
       ),
     );
   }
+}
+
+class _ItemKey extends ValueKey<int> {
+  _ItemKey(int value, int currentRowCount, int maxRowCount)
+      : super(
+            (value ~/ currentRowCount) * maxRowCount + value % currentRowCount);
 }

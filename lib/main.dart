@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'widgets/gallery_view.dart';
+import 'gallery.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,17 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
-      home: Scaffold(
-        appBar: AppBar(title: const Text(_title)),
-        body: Container(
-          child: GalleryView.builder(
-            itemCount: 200,
-            itemBuilder: (_, index) => Container(
-              color: Colors.primaries[index % Colors.primaries.length],
-            ),
-          ),
-        ),
-      ),
+      home: GalleryPage(),
     );
   }
 }
