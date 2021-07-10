@@ -8,6 +8,7 @@ class GalleryView extends StatefulWidget {
   final int minPerRow;
   final int maxPerRow;
   final Duration duration;
+  final Duration scaleDuration;
   final Curve curve;
   final Widget Function(BuildContext, int)? itemBuilder;
   final List<Widget>? children;
@@ -19,6 +20,7 @@ class GalleryView extends StatefulWidget {
     this.minPerRow = 1,
     this.maxPerRow = 10,
     this.duration = const Duration(milliseconds: 800),
+    this.scaleDuration = const Duration(milliseconds: 400),
     this.curve = Curves.easeOutQuad,
   })  : assert(children != null),
         itemBuilder = null,
@@ -32,7 +34,8 @@ class GalleryView extends StatefulWidget {
     required this.itemBuilder,
     this.minPerRow = 1,
     this.maxPerRow = 10,
-    this.duration = const Duration(milliseconds: 400),
+    this.duration = const Duration(milliseconds: 800),
+    this.scaleDuration = const Duration(milliseconds: 400),
     this.curve = Curves.easeOutQuad,
   })  : assert(itemBuilder != null),
         children = null,
@@ -55,6 +58,7 @@ class _GalleryViewState extends State<GalleryView>
 
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
+  late ScrollController _scrollController;
 
   // 当前显示的每行数量，缩放过程中会保持比当前屏幕大一个
   int _rowCount = 4;
@@ -63,14 +67,18 @@ class _GalleryViewState extends State<GalleryView>
   // 缩放结束时计算的每行数量
   int _realCount = 4;
 
+  double _scrollOffset = 0;
+
   // 是否有缩放操作. 一指滑动时也会触发onScaleUpdate 但scale值始终是1
   bool isScaled = false;
 
   @override
   initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: widget.duration);
+    _controller = AnimationController(vsync: this, duration: widget.scaleDuration);
     _controller.addListener(_onTicker);
+    _scrollController = ScrollController();
+    _scrollController.addListener(_onScroll);
   }
 
   @override
@@ -78,7 +86,13 @@ class _GalleryViewState extends State<GalleryView>
     _controller.stop(canceled: true);
     _controller.removeListener(_onTicker);
     _controller.dispose();
+    _scrollController.dispose();
     super.dispose();
+  }
+  _onScroll(){
+    setState(() {
+      _scrollOffset = _scrollController.position.pixels;
+    });
   }
 
   _updateScale(double newScale) {
@@ -100,6 +114,7 @@ class _GalleryViewState extends State<GalleryView>
       _lastScale *= viewScale;
       absScale = absScale / viewScale;
       _rowCount = newCount;
+
     }
 
     setState(() {
@@ -134,7 +149,7 @@ class _GalleryViewState extends State<GalleryView>
     double percent = min(1, (_scale - _targetScale).abs());
 
     _controller.duration = Duration(
-        milliseconds: (widget.duration.inMilliseconds * percent).round());
+        milliseconds: (widget.scaleDuration.inMilliseconds * percent).round());
     _scaleAnimation = _controller.drive(CurveTween(curve: widget.curve));
     _controller.animateTo(1);
   }
@@ -173,35 +188,37 @@ class _GalleryViewState extends State<GalleryView>
         }
       },
       child: Transform(
+        origin: Offset(0,_scrollOffset),
         transform: Matrix4.identity()..scale(_scale, _scale),
         child: GridView.builder(
           itemCount: widget.itemCount,
+          controller: _scrollController,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: _rowCount,
           ),
           itemBuilder: (context, index) {
-            return AnimatedSwitcher(
-              duration: widget.duration,
-              switchInCurve: widget.curve,
-              switchOutCurve: Curves.linear,
-              // 默认layout小图片不会铺满
-              layoutBuilder: (widget, widgets) {
-                return Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    // 不知道为何widgets中的元素不是旧的，好像也是新的
-                    if (widgets.length > 0) previousChild(index),
-                    if (widget != null) widget,
-                  ],
-                );
-              },
-              child: Container(
-                key: _ItemKey(index, _rowCount, widget.maxPerRow),
-                child: widget.itemBuilder != null
-                    ? widget.itemBuilder!(context, index)
-                    : widget.children![index],
-              ),
-            );
+            return widget.duration.inMilliseconds <= 0
+                ? childAt(index)
+                : AnimatedSwitcher(
+                    duration: widget.duration,
+                    switchInCurve: widget.curve,
+                    switchOutCurve: Curves.linear,
+                    // 默认layout小图片不会铺满
+                    layoutBuilder: (widget, widgets) {
+                      return Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          // 不知道为何widgets中的元素不是旧的，好像也是新的
+                          if (widgets.length > 0) previousChild(index),
+                          if (widget != null) widget,
+                        ],
+                      );
+                    },
+                    child: Container(
+                      key: _ItemKey(index, _rowCount, widget.maxPerRow),
+                      child: childAt(index),
+                    ),
+                  );
           },
         ),
       ),
