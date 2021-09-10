@@ -1,5 +1,6 @@
-import 'package:animatedalign1/loadings/rect_progress_indicator.dart';
 import 'package:flutter/material.dart';
+
+import 'rect_progress_indicator.dart';
 
 class LoadingIndex extends StatefulWidget {
   @override

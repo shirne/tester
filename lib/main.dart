@@ -1,6 +1,7 @@
-import 'package:animatedalign1/text_form.dart';
 import 'package:flutter/material.dart';
+
 import 'gallery.dart';
+import 'text_form.dart';
 import 'custom_paint.dart';
 import 'action_test.dart';
 
