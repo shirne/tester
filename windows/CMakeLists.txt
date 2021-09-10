@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
-project(animatedalign1 LANGUAGES CXX)
+project(flutest LANGUAGES CXX)
 
-set(BINARY_NAME "animatedalign1")
+set(BINARY_NAME "flutest")
 
 cmake_policy(SET CMP0063 NEW)
 

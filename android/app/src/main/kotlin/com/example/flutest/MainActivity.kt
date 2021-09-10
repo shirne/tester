@@ -1,4 +1,4 @@
-package com.example.animatedalign1
+package com.example.flutest
 
 import io.flutter.embedding.android.FlutterActivity
 

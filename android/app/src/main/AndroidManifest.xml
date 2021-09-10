@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.animatedalign1">
+    package="com.example.flutest">
    <application
-        android:label="animatedalign1"
+        android:label="flutest"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
