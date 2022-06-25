@@ -1,15 +1,11 @@
-
 import 'dart:io';
-import 'dart:math' as Math;
-import 'dart:ui';
-import 'package:flutter/material.dart';
+import 'dart:math' as math;
+
+import 'package:flutter/material.dart' hide Matrix4;
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:flutter/widgets.dart';
-import 'package:vector_math/vector_math.dart' show Vector3;
-import 'package:vector_math/vector_math.dart' as V;
+import 'package:vector_math/vector_math.dart' show Vector3, Matrix4;
 
 class Object3D extends StatefulWidget {
-
   final Size size;
   final bool asset;
   final String path;
@@ -18,27 +14,26 @@ class Object3D extends StatefulWidget {
   final double? angleY;
   final double? angleZ;
 
-  Object3D(
-      {Key? key,required this.size,
-      required this.path,
-      required this.asset,
-      this.angleX,
-      this.angleY,
-      this.angleZ,
-      this.zoom = 1.0}):super(key: key);
+  final bool useInternal;
 
+  const Object3D({
+    Key? key,
+    required this.size,
+    required this.path,
+    required this.asset,
+    this.angleX,
+    this.angleY,
+    this.angleZ,
+    this.zoom = 1.0,
+  })  : useInternal =
+            (angleX != null || angleY != null || angleZ != null) ? false : true,
+        super(key: key);
 
   @override
-  _Object3DState createState() =>
-      _Object3DState(path, (angleX != null || angleY != null || angleZ != null) ? false : true, asset);
+  State<Object3D> createState() => _Object3DState();
 }
 
 class _Object3DState extends State<Object3D> {
-
-
-  bool useInternal;
-  String path;
-
   double angleX = 15.0;
   double angleY = 45.0;
   double angleZ = 0.0;
@@ -51,15 +46,17 @@ class _Object3DState extends State<Object3D> {
 
   late File file;
 
-  _Object3DState(this.path, this.useInternal, bool asset) {
-    if (asset) {
-      rootBundle.loadString(this.path).then((String value) {
+  @override
+  void initState() {
+    super.initState();
+    if (widget.asset) {
+      rootBundle.loadString(widget.path).then((String value) {
         setState(() {
           object = value;
         });
       });
     } else {
-      File file = new File(this.path);
+      File file = File(widget.path);
       file.readAsString().then((String value) {
         setState(() {
           object = value;
@@ -108,7 +105,7 @@ class _Object3DState extends State<Object3D> {
     _updateCube(data);
   }
 
-  void _updateZoom(ScaleUpdateDetails details){
+  void _updateZoom(ScaleUpdateDetails details) {
     print(details);
   }
 
@@ -117,12 +114,12 @@ class _Object3DState extends State<Object3D> {
     return GestureDetector(
       child: CustomPaint(
         painter: _ObjectPainter(
-            widget.size,
-            object,
-            useInternal ? angleX : widget.angleX!,
-            useInternal ? angleY : widget.angleY!,
-            useInternal ? angleZ : widget.angleZ!,
-            widget.zoom,
+          widget.size,
+          object,
+          widget.useInternal ? angleX : widget.angleX!,
+          widget.useInternal ? angleY : widget.angleY!,
+          widget.useInternal ? angleZ : widget.angleZ!,
+          widget.zoom,
         ),
         size: widget.size,
       ),
@@ -134,13 +131,13 @@ class _Object3DState extends State<Object3D> {
 }
 
 class _ObjectPainter extends CustomPainter {
-  double _zoomFactor = 100.0;
+  final double _zoomFactor;
 
   final double _rotation = 5.0; // in degrees
   final double _scalingFactor = 10.0 / 100.0; // in percent
   double _translation = 0.1 / 100;
 
-  final double ZERO = 0.0;
+  final double zero = 0.0;
 
   final String object;
 
@@ -148,24 +145,28 @@ class _ObjectPainter extends CustomPainter {
 
   late List<Vector3> vertices;
   late List<dynamic> faces;
-  late V.Matrix4 T;
-  late Vector3 camera;
-  late Vector3 light;
+  late Matrix4 T;
+  Vector3 camera = Vector3(0.0, 0.0, 0.0);
+  Vector3 light = Vector3(0.0, 0.0, 100.0);
 
   double angleX;
   double angleY;
   double angleZ;
 
-  late Color color;
+  Color color = const Color.fromARGB(255, 255, 255, 255);
 
   Size size;
 
-  _ObjectPainter(this.size, this.object, this.angleX, this.angleY, this.angleZ,
-      this._zoomFactor) {
+  _ObjectPainter(
+    this.size,
+    this.object,
+    this.angleX,
+    this.angleY,
+    this.angleZ,
+    this._zoomFactor,
+  ) {
     _translation *= _zoomFactor;
-    camera = Vector3(0.0, 0.0, 0.0);
-    light = Vector3(0.0, 0.0, 100.0);
-    color = Color.fromARGB(255, 255, 255, 255);
+
     _viewPortX = (size.width / 2).toDouble();
     _viewPortY = (size.height / 2).toDouble();
   }
@@ -179,7 +180,7 @@ class _ObjectPainter extends CustomPainter {
 
     Vector3 vertex;
 
-    lines.forEach((String line) {
+    for (var line in lines) {
       line = line.replaceAll(RegExp(r"\s+$"), "");
       List<String> chars = line.split(" ");
 
@@ -199,7 +200,7 @@ class _ObjectPainter extends CustomPainter {
         faces.add(face);
         face = [];
       }
-    });
+    }
 
     return {'vertices': vertices, 'faces': faces};
   }
@@ -233,18 +234,18 @@ class _ObjectPainter extends CustomPainter {
   }
 
   Vector3 _calcDefaultVertex(Vector3 vertex) {
-    T = V.Matrix4.translationValues(_viewPortX, _viewPortY, ZERO);
+    T = Matrix4.translationValues(_viewPortX, _viewPortY, zero);
     T.scale(_zoomFactor, -_zoomFactor);
 
-    T.rotateX(_degreeToRadian(angleX != null ? angleX : 0.0));
-    T.rotateY(_degreeToRadian(angleY != null ? angleY : 0.0));
-    T.rotateZ(_degreeToRadian(angleZ != null ? angleZ : 0.0));
+    T.rotateX(_degreeToRadian(angleX));
+    T.rotateY(_degreeToRadian(angleY));
+    T.rotateZ(_degreeToRadian(angleZ));
 
     return T.transform3(vertex);
   }
 
   double _degreeToRadian(double degree) {
-    return degree * (Math.pi / 180.0);
+    return degree * (math.pi / 180.0);
   }
 
   void _drawFace(List<Vector3> verticesToDraw, List<int> face, Canvas canvas) {
@@ -263,7 +264,7 @@ class _ObjectPainter extends CustomPainter {
       koef = 0.0;
     }
 
-    Color newColor = Color.fromARGB(255, 0, 0, 0);
+    Color newColor = const Color.fromARGB(255, 0, 0, 0);
 
     Path path = Path();
 
@@ -300,9 +301,9 @@ class _ObjectPainter extends CustomPainter {
       path.lineTo(secondVertexX, secondVertexY);
     }
     var z = 0.0;
-    face.forEach((int x) {
+    for (var x in face) {
       z += verticesToDraw[x - 1].z;
-    });
+    }
 
     path.close();
     //print("draw $path  $paint");
@@ -319,9 +320,9 @@ class _ObjectPainter extends CustomPainter {
     faces = parsedFile["faces"];
 
     List<Vector3> verticesToDraw = [];
-    vertices.forEach((vertex) {
+    for (var vertex in vertices) {
       verticesToDraw.add(Vector3.copy(vertex));
-    });
+    }
 
     for (int i = 0; i < verticesToDraw.length; i++) {
       verticesToDraw[i] = _calcDefaultVertex(verticesToDraw[i]);
@@ -331,9 +332,9 @@ class _ObjectPainter extends CustomPainter {
     for (int i = 0; i < faces.length; i++) {
       List<int> face = faces[i];
       double z = 0.0;
-      face.forEach((int x) {
+      for (var x in face) {
         z += verticesToDraw[x - 1].z;
-      });
+      }
       Map data = <String, dynamic>{
         "index": i,
         "z": z,
@@ -362,5 +363,4 @@ class _ObjectPainter extends CustomPainter {
     //print('shouldRepaint: $sr');
     return sr;
   }
-
 }
