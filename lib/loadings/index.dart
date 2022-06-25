@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'rect_progress_indicator.dart';
 
 class LoadingIndex extends StatefulWidget {
+  const LoadingIndex({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _LoadingIndexState();
 }
@@ -13,7 +15,7 @@ class _LoadingIndexState extends State<LoadingIndex> {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          children: [
+          children: const [
             Center(
               child: CircularProgressIndicator(),
             ),

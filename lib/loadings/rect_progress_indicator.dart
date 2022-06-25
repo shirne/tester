@@ -1,11 +1,10 @@
 import 'dart:math' as math;
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
 const double _kMinRectProgressIndicatorSize = 36.0;
 const int _kIndeterminateRectDuration = 1333 * 2222;
-
-enum _ActivityIndicatorType { material, adaptive }
 
 class _RectProgressIndicatorPainter extends CustomPainter {
   _RectProgressIndicatorPainter({
@@ -40,6 +39,8 @@ class _RectProgressIndicatorPainter extends CustomPainter {
   final double arcStart;
   final double arcSweep;
 
+  PathMetric? rect;
+
   static const double _twoPi = math.pi * 2.0;
   static const double _epsilon = .001;
   // Canvas.drawArc(r, 0, 2*PI) doesn't draw anything, so just get close.
@@ -48,6 +49,12 @@ class _RectProgressIndicatorPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    rect ??= (Path()
+          ..addRRect(RRect.fromLTRBR(
+              0, 0, size.width, size.height, const Radius.circular(5))))
+        .computeMetrics()
+        .single;
+    final total = rect!.length;
     final Paint paint = Paint()
       ..color = valueColor
       ..strokeWidth = strokeWidth
@@ -57,13 +64,21 @@ class _RectProgressIndicatorPainter extends CustomPainter {
         ..color = backgroundColor!
         ..strokeWidth = strokeWidth
         ..style = PaintingStyle.stroke;
-      canvas.drawArc(Offset.zero & size, 0, _sweep, false, backgroundPaint);
+      //canvas.drawArc(Offset.zero & size, 0, _sweep, false, backgroundPaint);
+      Path path = rect!.extractPath(0, total * _sweep);
+      canvas.drawPath(path, backgroundPaint);
     }
 
-    if (value == null) // Indeterminate
+    // Indeterminate
+    if (value == null) {
       paint.strokeCap = StrokeCap.square;
+    }
 
-    canvas.drawArc(Offset.zero & size, arcStart, arcSweep, false, paint);
+    //canvas.drawArc(Offset.zero & size, arcStart, arcSweep, false, paint);
+
+    canvas.drawPath(
+        rect!.extractPath(total * arcStart / _twoPi, total * arcSweep / _twoPi),
+        paint);
   }
 
   @override
@@ -167,8 +182,7 @@ class RectProgressIndicator extends ProgressIndicator {
     this.strokeWidth = 4.0,
     String? semanticsLabel,
     String? semanticsValue,
-  })  : _indicatorType = _ActivityIndicatorType.material,
-        super(
+  }) : super(
           key: key,
           value: value,
           backgroundColor: backgroundColor,
@@ -178,33 +192,27 @@ class RectProgressIndicator extends ProgressIndicator {
           semanticsValue: semanticsValue,
         );
 
-  /// Creates an adaptive progress indicator that is a
-  /// [CupertinoActivityIndicator] in iOS and [RectProgressIndicator] in
-  /// material theme/non-iOS.
-  ///
-  /// The [value], [backgroundColor], [valueColor], [strokeWidth],
-  /// [semanticsLabel], and [semanticsValue] will be ignored in iOS.
-  ///
-  /// {@macro flutter.material.ProgressIndicator.ProgressIndicator}
-  const RectProgressIndicator.adaptive({
-    Key? key,
-    double? value,
-    Color? backgroundColor,
-    Animation<Color?>? valueColor,
-    this.strokeWidth = 4.0,
-    String? semanticsLabel,
-    String? semanticsValue,
-  })  : _indicatorType = _ActivityIndicatorType.adaptive,
-        super(
-          key: key,
-          value: value,
-          backgroundColor: backgroundColor,
-          valueColor: valueColor,
-          semanticsLabel: semanticsLabel,
-          semanticsValue: semanticsValue,
-        );
+  Color _getValueColor(BuildContext context) {
+    return valueColor?.value ??
+        color ??
+        ProgressIndicatorTheme.of(context).color ??
+        Theme.of(context).colorScheme.primary;
+  }
 
-  final _ActivityIndicatorType _indicatorType;
+  Widget _buildSemanticsWrapper({
+    required BuildContext context,
+    required Widget child,
+  }) {
+    String? expandedSemanticsValue = semanticsValue;
+    if (value != null) {
+      expandedSemanticsValue ??= '${(value! * 100).round()}%';
+    }
+    return Semantics(
+      label: semanticsLabel,
+      value: expandedSemanticsValue,
+      child: child,
+    );
+  }
 
   /// The width of the line used to draw the circle.
   ///
@@ -251,10 +259,11 @@ class _RectProgressIndicatorState extends State<RectProgressIndicator>
   @override
   void didUpdateWidget(RectProgressIndicator oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.value == null && !_controller.isAnimating)
+    if (widget.value == null && !_controller.isAnimating) {
       _controller.repeat();
-    else if (widget.value != null && _controller.isAnimating)
+    } else if (widget.value != null && _controller.isAnimating) {
       _controller.stop();
+    }
   }
 
   @override
@@ -263,11 +272,7 @@ class _RectProgressIndicatorState extends State<RectProgressIndicator>
     super.dispose();
   }
 
-  Widget _buildCupertinoIndicator(BuildContext context) {
-    return CupertinoActivityIndicator(key: widget.key);
-  }
-
-  Widget _buildMaterialIndicator(BuildContext context, double headValue,
+  Widget _buildIndicator(BuildContext context, double headValue,
       double tailValue, double offsetValue, double rotationValue) {
     return widget._buildSemanticsWrapper(
       context: context,
@@ -297,7 +302,7 @@ class _RectProgressIndicatorState extends State<RectProgressIndicator>
     return AnimatedBuilder(
       animation: _controller,
       builder: (BuildContext context, Widget? child) {
-        return _buildMaterialIndicator(
+        return _buildIndicator(
           context,
           _strokeHeadTween.evaluate(_controller),
           _strokeTailTween.evaluate(_controller),
@@ -310,26 +315,9 @@ class _RectProgressIndicatorState extends State<RectProgressIndicator>
 
   @override
   Widget build(BuildContext context) {
-    switch (widget._indicatorType) {
-      case _ActivityIndicatorType.material:
-        if (widget.value != null)
-          return _buildMaterialIndicator(context, 0.0, 0.0, 0, 0.0);
-        return _buildAnimation();
-      case _ActivityIndicatorType.adaptive:
-        final ThemeData theme = Theme.of(context);
-        assert(theme.platform != null);
-        switch (theme.platform) {
-          case TargetPlatform.iOS:
-          case TargetPlatform.macOS:
-            return _buildCupertinoIndicator(context);
-          case TargetPlatform.android:
-          case TargetPlatform.fuchsia:
-          case TargetPlatform.linux:
-          case TargetPlatform.windows:
-            if (widget.value != null)
-              return _buildMaterialIndicator(context, 0.0, 0.0, 0, 0.0);
-            return _buildAnimation();
-        }
+    if (widget.value != null) {
+      return _buildIndicator(context, 0.0, 0.0, 0, 0.0);
     }
+    return _buildAnimation();
   }
 }

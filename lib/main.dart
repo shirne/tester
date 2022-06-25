@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-import 'gallery.dart';
-import 'text_form.dart';
-import 'custom_paint.dart';
-import 'action_test.dart';
+import 'future_test.dart';
+import 'loadings/index.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 /// This is the main application widget.
 class MyApp extends StatelessWidget {
   static const String _title = 'Flutter Code Sample';
 
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: _title,
-      home: TextForm(),
+      home: FutureTest(),
     );
   }
 }
