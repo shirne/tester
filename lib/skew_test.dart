@@ -1,16 +1,14 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SkewTest extends StatefulWidget{
+class SkewTest extends StatefulWidget {
+  const SkewTest({Key? key}) : super(key: key);
+
   @override
   State<SkewTest> createState() => _SkewTestState();
-
 }
 
 class _SkewTestState extends State<SkewTest> {
-
   List<double> matrixs = List.filled(16, 0.0);
   double stepper = 0;
   Matrix4 inint = Matrix4.identity();
@@ -26,12 +24,12 @@ class _SkewTestState extends State<SkewTest> {
     print(inint);
   }
 
-  setStepper(double percent){
+  setStepper(double percent) {
     stepper = percent;
     setState(() {
-      matrixs[4] = - 0.105 * stepper;
+      matrixs[4] = -0.105 * stepper;
       matrixs[5] = inint.storage[5] + (0.9 - inint.storage[5]) * stepper;
-      matrixs[7] = - 0.004 * stepper;
+      matrixs[7] = -0.004 * stepper;
     });
   }
 
@@ -46,13 +44,20 @@ class _SkewTestState extends State<SkewTest> {
             child: Column(
               children: [
                 ListTile(
-                    title: Text('Matrix'),
-                    subtitle: Text(matrixs[4].toString()+"\n"+matrixs[5].toString()+"\n"+matrixs[7].toString(), softWrap: false,),
+                    title: const Text('Matrix'),
+                    subtitle: Text(
+                      matrixs[4].toString() +
+                          "\n" +
+                          matrixs[5].toString() +
+                          "\n" +
+                          matrixs[7].toString(),
+                      softWrap: false,
+                    ),
                     leading: GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         setStepper(0);
                       },
-                      child: Icon(Icons.wifi_protected_setup),
+                      child: const Icon(Icons.wifi_protected_setup),
                     ),
                     trailing: CupertinoSlider(
                       value: stepper,
@@ -70,39 +75,39 @@ class _SkewTestState extends State<SkewTest> {
           ),
         ),
         Expanded(
-          child:  Stack(
-              children: [
-                Center(
-                  child: Container(
-                    width: 250.0,
-                    height: 250.0,
-                    color: Colors.lightBlue,
-                    transform: (Matrix4(
-                        matrixs[0],
-                        matrixs[1],
-                        matrixs[2],
-                        matrixs[3],
-                        matrixs[4],
-                        matrixs[5],
-                        matrixs[6],
-                        matrixs[7],
-                        matrixs[8],
-                        matrixs[9],
-                        matrixs[10],
-                        matrixs[11],
-                        matrixs[12],
-                        matrixs[13],
-                        matrixs[14],
-                        matrixs[15])),
-                    child: AnimatedAlign(
-                      alignment: Alignment.bottomLeft,
-                      duration: const Duration(seconds: 1),
-                      curve: Curves.fastOutSlowIn,
-                      child: const FlutterLogo(size: 50.0),
-                    ),
+          child: Stack(
+            children: [
+              Center(
+                child: Container(
+                  width: 250.0,
+                  height: 250.0,
+                  color: Colors.lightBlue,
+                  transform: (Matrix4(
+                      matrixs[0],
+                      matrixs[1],
+                      matrixs[2],
+                      matrixs[3],
+                      matrixs[4],
+                      matrixs[5],
+                      matrixs[6],
+                      matrixs[7],
+                      matrixs[8],
+                      matrixs[9],
+                      matrixs[10],
+                      matrixs[11],
+                      matrixs[12],
+                      matrixs[13],
+                      matrixs[14],
+                      matrixs[15])),
+                  child: const AnimatedAlign(
+                    alignment: Alignment.bottomLeft,
+                    duration: Duration(seconds: 1),
+                    curve: Curves.fastOutSlowIn,
+                    child: FlutterLogo(size: 50.0),
                   ),
                 ),
-              ],
+              ),
+            ],
           ),
         ),
       ],

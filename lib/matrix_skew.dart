@@ -1,16 +1,14 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MatrixSkew extends StatefulWidget{
+class MatrixSkew extends StatefulWidget {
+  const MatrixSkew({Key? key}) : super(key: key);
+
   @override
   State<MatrixSkew> createState() => _MatrixSkewState();
-
 }
 
 class _MatrixSkewState extends State<MatrixSkew> {
-
   double skewX = 0;
   double skewY = 0;
   double rotationX = 0;
@@ -33,15 +31,18 @@ class _MatrixSkewState extends State<MatrixSkew> {
             child: Column(
               children: [
                 ListTile(
-                    title: Text('SkewX'),
-                    subtitle: Text(skewX.toString(), softWrap: false,),
+                    title: const Text('SkewX'),
+                    subtitle: Text(
+                      skewX.toString(),
+                      softWrap: false,
+                    ),
                     leading: GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
                           skewX = 0;
                         });
                       },
-                      child: Icon(Icons.wifi_protected_setup),
+                      child: const Icon(Icons.wifi_protected_setup),
                     ),
                     trailing: CupertinoSlider(
                       value: skewX,
@@ -55,15 +56,18 @@ class _MatrixSkewState extends State<MatrixSkew> {
                       },
                     )),
                 ListTile(
-                    title: Text('SkewY'),
-                    subtitle: Text(skewY.toString(), softWrap: false,),
+                    title: const Text('SkewY'),
+                    subtitle: Text(
+                      skewY.toString(),
+                      softWrap: false,
+                    ),
                     leading: GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
                           skewY = 0;
                         });
                       },
-                      child: Icon(Icons.wifi_protected_setup),
+                      child: const Icon(Icons.wifi_protected_setup),
                     ),
                     trailing: CupertinoSlider(
                       value: skewY,
@@ -77,15 +81,18 @@ class _MatrixSkewState extends State<MatrixSkew> {
                       },
                     )),
                 ListTile(
-                    title: Text('rotationX'),
-                    subtitle: Text(rotationX.toString(), softWrap: false,),
+                    title: const Text('rotationX'),
+                    subtitle: Text(
+                      rotationX.toString(),
+                      softWrap: false,
+                    ),
                     leading: GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
                           rotationX = 0;
                         });
                       },
-                      child: Icon(Icons.wifi_protected_setup),
+                      child: const Icon(Icons.wifi_protected_setup),
                     ),
                     trailing: CupertinoSlider(
                       value: rotationX,
@@ -99,15 +106,18 @@ class _MatrixSkewState extends State<MatrixSkew> {
                       },
                     )),
                 ListTile(
-                    title: Text('translate'),
-                    subtitle: Text(translate.toString(), softWrap: false,),
+                    title: const Text('translate'),
+                    subtitle: Text(
+                      translate.toString(),
+                      softWrap: false,
+                    ),
                     leading: GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
                           translate = 0;
                         });
                       },
-                      child: Icon(Icons.wifi_protected_setup),
+                      child: const Icon(Icons.wifi_protected_setup),
                     ),
                     trailing: CupertinoSlider(
                       value: translate,
@@ -125,7 +135,7 @@ class _MatrixSkewState extends State<MatrixSkew> {
           ),
         ),
         Expanded(
-          child:  Stack(
+          child: Stack(
             children: [
               Center(
                 child: Container(
@@ -133,12 +143,15 @@ class _MatrixSkewState extends State<MatrixSkew> {
                   height: 250.0,
                   color: Colors.lightBlue,
                   transformAlignment: Alignment.center,
-                  transform: (Matrix4.skew(skewX, skewY)+Matrix4.rotationX(rotationX)+Matrix4.translationValues(translate, translate, translate)),
-                  child: AnimatedAlign(
+                  transform: (Matrix4.skew(skewX, skewY) +
+                      Matrix4.rotationX(rotationX) +
+                      Matrix4.translationValues(
+                          translate, translate, translate)),
+                  child: const AnimatedAlign(
                     alignment: Alignment.bottomLeft,
-                    duration: const Duration(seconds: 1),
+                    duration: Duration(seconds: 1),
                     curve: Curves.fastOutSlowIn,
-                    child: const FlutterLogo(size: 50.0),
+                    child: FlutterLogo(size: 50.0),
                   ),
                 ),
               ),

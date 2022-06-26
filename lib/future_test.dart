@@ -50,7 +50,7 @@ class _FutureTestState extends State<FutureTest> with WidgetsBindingObserver {
   }
 
   Future<int> _getFuture() {
-    return Future.delayed(Duration(seconds: 5), () => 1);
+    return Future.delayed(const Duration(seconds: 5), () => 1);
   }
 
   _showResult(int val) {
@@ -83,7 +83,7 @@ class _FutureTestState extends State<FutureTest> with WidgetsBindingObserver {
               onPressed: () {
                 _startFuture();
               },
-              child: Text('start'),
+              child: const Text('start'),
             ),
           )
         ],

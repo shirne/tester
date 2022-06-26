@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'future_test.dart';
-import 'loadings/index.dart';
 
 void main() => runApp(const MyApp());
 

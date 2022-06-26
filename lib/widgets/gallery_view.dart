@@ -27,7 +27,7 @@ class GalleryView extends StatefulWidget {
         itemCount = children!.length,
         super(key: key);
 
-  GalleryView.builder({
+  const GalleryView.builder({
     Key? key,
     this.controller,
     required this.itemCount,
@@ -75,7 +75,8 @@ class _GalleryViewState extends State<GalleryView>
   @override
   initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: widget.scaleDuration);
+    _controller =
+        AnimationController(vsync: this, duration: widget.scaleDuration);
     _controller.addListener(_onTicker);
     _scrollController = ScrollController();
     _scrollController.addListener(_onScroll);
@@ -89,7 +90,8 @@ class _GalleryViewState extends State<GalleryView>
     _scrollController.dispose();
     super.dispose();
   }
-  _onScroll(){
+
+  _onScroll() {
     setState(() {
       _scrollOffset = _scrollController.position.pixels;
     });
@@ -114,7 +116,6 @@ class _GalleryViewState extends State<GalleryView>
       _lastScale *= viewScale;
       absScale = absScale / viewScale;
       _rowCount = newCount;
-
     }
 
     setState(() {
@@ -188,7 +189,7 @@ class _GalleryViewState extends State<GalleryView>
         }
       },
       child: Transform(
-        origin: Offset(0,_scrollOffset),
+        origin: Offset(0, _scrollOffset),
         transform: Matrix4.identity()..scale(_scale, _scale),
         child: GridView.builder(
           itemCount: widget.itemCount,
@@ -209,7 +210,7 @@ class _GalleryViewState extends State<GalleryView>
                         fit: StackFit.expand,
                         children: [
                           // 不知道为何widgets中的元素不是旧的，好像也是新的
-                          if (widgets.length > 0) previousChild(index),
+                          if (widgets.isNotEmpty) previousChild(index),
                           if (widget != null) widget,
                         ],
                       );
@@ -227,7 +228,7 @@ class _GalleryViewState extends State<GalleryView>
 }
 
 class _ItemKey extends ValueKey<int> {
-  _ItemKey(int value, int currentRowCount, int maxRowCount)
+  const _ItemKey(int value, int currentRowCount, int maxRowCount)
       : super(
             (value ~/ currentRowCount) * maxRowCount + value % currentRowCount);
 }

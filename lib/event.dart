@@ -1,12 +1,11 @@
-
-
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 
-class EventTestPage extends StatefulWidget{
+class EventTestPage extends StatefulWidget {
+  const EventTestPage({Key? key}) : super(key: key);
+
   @override
   State<EventTestPage> createState() => _EventTestPageState();
-
 }
 
 class _EventTestPageState extends State<EventTestPage> {
@@ -34,7 +33,6 @@ class _EventTestPageState extends State<EventTestPage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -42,34 +40,40 @@ class _EventTestPageState extends State<EventTestPage> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ElevatedButton(onPressed: (){
-            event.fire(DataChangeEvent<int>(intValue++));
-          }, child: Text('int event')),
-
-          ElevatedButton(onPressed: (){
-            event.fire(DataChangeEvent<String>((intValue++).toString()));
-          }, child: Text('String event')),
-
-          ElevatedButton(onPressed: (){
-            event.fire(DataChangeEvent<double>((intValue++).toDouble()));
-          }, child: Text('double event')),
-
-          ElevatedButton(onPressed: (){
-            event.fire(DataChangeEvent<Map<String, String>>(
-                {"string": (intValue++).toString()}));
-          }, child: Text('Map<String, String> event')),
-
-          ElevatedButton(onPressed: (){
-            event.fire(DataChangeEvent<Map<String, int>>(
-                {"string": intValue++}));
-          }, child: Text('Map<String, int> event')),
+          ElevatedButton(
+              onPressed: () {
+                event.fire(DataChangeEvent<int>(intValue++));
+              },
+              child: const Text('int event')),
+          ElevatedButton(
+              onPressed: () {
+                event.fire(DataChangeEvent<String>((intValue++).toString()));
+              },
+              child: const Text('String event')),
+          ElevatedButton(
+              onPressed: () {
+                event.fire(DataChangeEvent<double>((intValue++).toDouble()));
+              },
+              child: const Text('double event')),
+          ElevatedButton(
+              onPressed: () {
+                event.fire(DataChangeEvent<Map<String, String>>(
+                    {"string": (intValue++).toString()}));
+              },
+              child: const Text('Map<String, String> event')),
+          ElevatedButton(
+              onPressed: () {
+                event.fire(
+                    DataChangeEvent<Map<String, int>>({"string": intValue++}));
+              },
+              child: const Text('Map<String, int> event')),
         ],
       ),
     );
   }
 }
 
-class DataChangeEvent<T>{
+class DataChangeEvent<T> {
   T? data;
 
   DataChangeEvent(this.data);
@@ -80,13 +84,10 @@ class DataChangeEvent<T>{
   }
 }
 
-class MyEventBus extends EventBus{
-
+class MyEventBus extends EventBus {
   static MyEventBus? instance;
-  static MyEventBus getInstance(){
-    if(instance == null){
-      instance = MyEventBus();
-    }
+  static MyEventBus getInstance() {
+    instance ??= MyEventBus();
     return instance!;
   }
 }

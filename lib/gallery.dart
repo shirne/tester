@@ -39,9 +39,9 @@ class _GalleryPageState extends State<GalleryPage> {
         final result = await Dio().get<Map<String, dynamic>>(
             "https://randomuser.me/api/?results=$_itemCount");
         List<dynamic> list = result.data!['results'];
-        list.forEach((element) {
+        for (var element in list) {
           avatars.add(element['picture']['large']);
-        });
+        }
       } catch (_) {
         print(_);
       }
@@ -68,19 +68,17 @@ class _GalleryPageState extends State<GalleryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Gallery')),
-      body: Container(
-        child: GalleryView.builder(
-          itemCount: _itemCount,
-          itemBuilder: (_, index) => _isImage
-              ? FadeInImage(
-                  placeholder: transImage,
-                  image: NetworkImage(avatars[index % avatars.length]),
-                  fit: BoxFit.fill,
-                )
-              : Container(
-                  color: Colors.primaries[index % Colors.primaries.length],
-                ),
-        ),
+      body: GalleryView.builder(
+        itemCount: _itemCount,
+        itemBuilder: (_, index) => _isImage
+            ? FadeInImage(
+                placeholder: transImage,
+                image: NetworkImage(avatars[index % avatars.length]),
+                fit: BoxFit.fill,
+              )
+            : Container(
+                color: Colors.primaries[index % Colors.primaries.length],
+              ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -89,8 +87,8 @@ class _GalleryPageState extends State<GalleryPage> {
         },
         tooltip: "切换展示模式",
         child: _isLoading
-            ? Padding(
-                padding: const EdgeInsets.all(12.0),
+            ? const Padding(
+                padding: EdgeInsets.all(12.0),
                 child: CircularProgressIndicator(
                   color: Colors.white,
                   strokeWidth: 2,

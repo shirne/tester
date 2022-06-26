@@ -5,6 +5,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class QrcodeTest extends StatefulWidget {
+  const QrcodeTest({Key? key}) : super(key: key);
+
   @override
   State<QrcodeTest> createState() => _QrcodeTestState();
 }
@@ -20,7 +22,7 @@ class _QrcodeTestState extends State<QrcodeTest> {
 
   getImage() async {
     Uint8List data =
-        await File(Directory.current.absolute.path + "/assets/images/test.png")
+        File(Directory.current.absolute.path + "/assets/images/test.png")
             .readAsBytesSync();
     //var descriptor =
     //    ImageDescriptor.encoded(await ImmutableBuffer.fromUint8List(data));
@@ -54,9 +56,8 @@ class _QrcodeTestState extends State<QrcodeTest> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Center(
-            child: Column(
+    return Center(
+        child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -75,6 +76,6 @@ class _QrcodeTestState extends State<QrcodeTest> {
           0, 255, 255, 255, 0, 0, 0, 0
         ])),
       ],
-    )));
+    ));
   }
 }

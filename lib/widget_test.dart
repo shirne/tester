@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class WidgetTest extends StatelessWidget {
+  const WidgetTest({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -12,9 +14,9 @@ class WidgetTest extends StatelessWidget {
           // 文本颜色不能在textStyle中指定，需要指定foregroundColor
           textStyle: MaterialStateProperty.resolveWith((states) {
             if (states.contains(MaterialState.pressed)) {
-              return TextStyle(fontSize: 12);
+              return const TextStyle(fontSize: 12);
             }
-            return TextStyle(fontSize: 16);
+            return const TextStyle(fontSize: 16);
           }),
           foregroundColor: MaterialStateProperty.resolveWith((states) {
             if (states.contains(MaterialState.pressed)) {
@@ -29,7 +31,7 @@ class WidgetTest extends StatelessWidget {
             return Colors.white;
           }),
         ),
-        child: Padding(
+        child: const Padding(
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
           child: Text('点击这个按钮'),
         ),

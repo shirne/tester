@@ -1,10 +1,9 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// This is the stateful widget that the main application instantiates.
 class Matrix4Test extends StatefulWidget {
-  Matrix4Test({Key? key}) : super(key: key);
+  const Matrix4Test({Key? key}) : super(key: key);
 
   @override
   State<Matrix4Test> createState() => _Matrix4TestState();
@@ -36,41 +35,45 @@ class _Matrix4TestState extends State<Matrix4Test> {
     print(matrixs);
     List<Widget> settings = [];
     int idx = 0;
-    matrixs.forEach((element) {
+    for (var element in matrixs) {
       int i = idx++;
       double min = -9;
       double max = 9;
-      if(i > 11){
+      if (i > 11) {
         min = -100;
         max = 100;
       }
-      if( i == 3 || i == 7 || i == 11){
+      if (i == 3 || i == 7 || i == 11) {
         min = -0.1;
         max = 0.1;
       }
       settings.add(ListTile(
-          title: Text('Matrix $i'),
-          subtitle: Text(matrixs[i].toString(), softWrap: false,),
-          leading: GestureDetector(
-            onTap: (){
-              setState(() {
-                matrixs[i] = Matrix4.identity().storage[i];
-              });
-            },
-            child: Icon(Icons.wifi_protected_setup),
-          ),
-          trailing: CupertinoSlider(
-            value: matrixs[i],
-            min: min,
-            max: max,
-            divisions: 100,
-            onChanged: (value) {
-              setState(() {
-                matrixs[i] = value;
-              });
-            },
-          )));
-    });
+        title: Text('Matrix $i'),
+        subtitle: Text(
+          matrixs[i].toString(),
+          softWrap: false,
+        ),
+        leading: GestureDetector(
+          onTap: () {
+            setState(() {
+              matrixs[i] = Matrix4.identity().storage[i];
+            });
+          },
+          child: const Icon(Icons.wifi_protected_setup),
+        ),
+        trailing: CupertinoSlider(
+          value: matrixs[i],
+          min: min,
+          max: max,
+          divisions: 100,
+          onChanged: (value) {
+            setState(() {
+              matrixs[i] = value;
+            });
+          },
+        ),
+      ));
+    }
     return Row(
       children: [
         Container(
@@ -115,7 +118,7 @@ class _Matrix4TestState extends State<Matrix4Test> {
                         matrixs[15])),
                     child: AnimatedAlign(
                       alignment:
-                      selected ? Alignment.topRight : Alignment.bottomLeft,
+                          selected ? Alignment.topRight : Alignment.bottomLeft,
                       duration: const Duration(seconds: 1),
                       curve: Curves.fastOutSlowIn,
                       child: const FlutterLogo(size: 50.0),

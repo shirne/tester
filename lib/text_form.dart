@@ -3,6 +3,8 @@ import 'dart:isolate';
 import 'package:flutter/material.dart';
 
 class TextForm extends StatefulWidget {
+  const TextForm({Key? key}) : super(key: key);
+
   @override
   State<TextForm> createState() => _TextFormState();
 }
@@ -43,7 +45,7 @@ class _TextFormState extends State<TextForm> {
                 IsoMessage message = IsoMessage(port.sendPort, ["asd", "dsa"]);
                 Isolate.spawn<IsoMessage>(myCaculate, message);
               },
-              child: Text('ok'),
+              child: const Text('ok'),
             )
           ],
         ),
