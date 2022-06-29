@@ -3,7 +3,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart' hide Matrix4;
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:vector_math/vector_math.dart' show Vector3, Matrix4;
+import 'package:vector_math/vector_math_64.dart' show Vector3, Matrix4;
 
 class Object3D extends StatefulWidget {
   final Size size;
