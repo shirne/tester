@@ -21,12 +21,10 @@ class _MagnifierState extends State<Magnifier> {
   double left = 0;
   double top = 0;
 
-  double transLeft = 0;
-  double transTop = 0;
-
   bool showMagnifier = false;
 
   Size size = Size.zero;
+  Matrix4 translate = Matrix4.identity();
 
   void _onEnter(PointerEnterEvent event) {
     //print(event);
@@ -44,24 +42,30 @@ class _MagnifierState extends State<Magnifier> {
 
   void _onHover(PointerHoverEvent event) {
     //print(event);
+    final offsetTop = event.position.dy - event.localPosition.dy;
+    final offsetLeft = event.position.dx - event.localPosition.dx;
 
     setState(() {
       left = math.max(
           0,
-          math.min(size.width - widget.size,
-              event.position.dx - widget.size / widget.power));
+          math.min(size.width - offsetLeft - widget.size,
+              event.position.dx - offsetLeft - widget.size / 2));
       top = math.max(
           0,
-          math.min(size.height - kToolbarHeight - widget.size,
-              event.position.dy - kToolbarHeight - widget.size / widget.power));
-      transLeft = -event.position.dx; // 和power 什么关系?
-      transTop = -event.position.dy;
+          math.min(size.height - offsetTop - widget.size,
+              event.position.dy - offsetTop - widget.size / 2));
+      translate = Matrix4.identity()
+        ..translate(event.position.dx, event.position.dy)
+        ..scale(widget.power)
+        ..translate(-event.position.dx, -event.position.dy);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
+    final md = MediaQuery.of(context);
+    size = md.size;
+
     return MouseRegion(
       onEnter: _onEnter,
       onExit: _onExit,
@@ -82,12 +86,7 @@ class _MagnifierState extends State<Magnifier> {
                 clipBehavior: Clip.hardEdge,
                 child: BackdropFilter(
                   filter: ImageFilter.matrix(
-                    Float64List.fromList([
-                      widget.power, 0, 0, 0, //
-                      0, widget.power, 0, 0,
-                      0, 0, 1, 0,
-                      transLeft, transTop, 0, 1
-                    ]),
+                    translate.storage,
                     filterQuality: FilterQuality.low,
                   ),
                   child: Container(

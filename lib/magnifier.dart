@@ -8,10 +8,12 @@ class MagnifierPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('test'),
+      ),
       body: Magnifier(
         power: 2,
-        size: 300,
+        size: 200,
         child: Container(
           decoration: BoxDecoration(
             gradient:
