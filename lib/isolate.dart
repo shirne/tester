@@ -2,16 +2,18 @@ import 'dart:isolate';
 
 import 'package:flutter/material.dart';
 
-class TextForm extends StatefulWidget {
-  const TextForm({Key? key}) : super(key: key);
+class IsolateTest extends StatefulWidget {
+  const IsolateTest({Key? key}) : super(key: key);
 
   @override
-  State<TextForm> createState() => _TextFormState();
+  State<IsolateTest> createState() => _IsolateTestState();
 }
 
-class _TextFormState extends State<TextForm> {
+class _IsolateTestState extends State<IsolateTest> {
   late TextEditingController firstController;
   late TextEditingController secondController;
+
+  String result = '';
 
   @override
   void initState() {
@@ -23,6 +25,7 @@ class _TextFormState extends State<TextForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('isolate')),
       body: SafeArea(
         child: Column(
           children: [
@@ -37,6 +40,9 @@ class _TextFormState extends State<TextForm> {
                 var port = ReceivePort();
                 port.listen((message) {
                   print("onData: $message");
+                  setState(() {
+                    result = message;
+                  });
                 }, onDone: () {
                   print('iso close');
                 }, onError: (error) {
@@ -46,6 +52,9 @@ class _TextFormState extends State<TextForm> {
                 Isolate.spawn<IsoMessage>(myCaculate, message);
               },
               child: const Text('ok'),
+            ),
+            Center(
+              child: Text('首字母：$result'),
             )
           ],
         ),

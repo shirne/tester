@@ -35,39 +35,42 @@ class _EventTestPageState extends State<EventTestPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          ElevatedButton(
-              onPressed: () {
-                event.fire(DataChangeEvent<int>(intValue++));
-              },
-              child: const Text('int event')),
-          ElevatedButton(
-              onPressed: () {
-                event.fire(DataChangeEvent<String>((intValue++).toString()));
-              },
-              child: const Text('String event')),
-          ElevatedButton(
-              onPressed: () {
-                event.fire(DataChangeEvent<double>((intValue++).toDouble()));
-              },
-              child: const Text('double event')),
-          ElevatedButton(
-              onPressed: () {
-                event.fire(DataChangeEvent<Map<String, String>>(
-                    {"string": (intValue++).toString()}));
-              },
-              child: const Text('Map<String, String> event')),
-          ElevatedButton(
-              onPressed: () {
-                event.fire(
-                    DataChangeEvent<Map<String, int>>({"string": intValue++}));
-              },
-              child: const Text('Map<String, int> event')),
-        ],
+    return Scaffold(
+      appBar: AppBar(title: const Text('event bus')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  event.fire(DataChangeEvent<int>(intValue++));
+                },
+                child: const Text('int event')),
+            ElevatedButton(
+                onPressed: () {
+                  event.fire(DataChangeEvent<String>((intValue++).toString()));
+                },
+                child: const Text('String event')),
+            ElevatedButton(
+                onPressed: () {
+                  event.fire(DataChangeEvent<double>((intValue++).toDouble()));
+                },
+                child: const Text('double event')),
+            ElevatedButton(
+                onPressed: () {
+                  event.fire(DataChangeEvent<Map<String, String>>(
+                      {"string": (intValue++).toString()}));
+                },
+                child: const Text('Map<String, String> event')),
+            ElevatedButton(
+                onPressed: () {
+                  event.fire(DataChangeEvent<Map<String, int>>(
+                      {"string": intValue++}));
+                },
+                child: const Text('Map<String, int> event')),
+          ],
+        ),
       ),
     );
   }

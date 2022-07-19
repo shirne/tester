@@ -74,62 +74,66 @@ class _Matrix4TestState extends State<Matrix4Test> {
         ),
       ));
     }
-    return Row(
-      children: [
-        Container(
-          alignment: Alignment.centerLeft,
-          width: 350,
-          child: SingleChildScrollView(
-            child: Column(
-              children: settings,
+    return Scaffold(
+      appBar: AppBar(title: const Text('Matrix4')),
+      body: Row(
+        children: [
+          Container(
+            alignment: Alignment.centerLeft,
+            width: 350,
+            child: SingleChildScrollView(
+              child: Column(
+                children: settings,
+              ),
             ),
           ),
-        ),
-        Expanded(
-          child: GestureDetector(
-            onTap: () {
-              setState(() {
-                selected = !selected;
-              });
-            },
-            child: Stack(
-              children: [
-                Center(
-                  child: Container(
-                    width: 250.0,
-                    height: 250.0,
-                    color: Colors.lightBlue,
-                    transform: (Matrix4(
-                        matrixs[0],
-                        matrixs[1],
-                        matrixs[2],
-                        matrixs[3],
-                        matrixs[4],
-                        matrixs[5],
-                        matrixs[6],
-                        matrixs[7],
-                        matrixs[8],
-                        matrixs[9],
-                        matrixs[10],
-                        matrixs[11],
-                        matrixs[12],
-                        matrixs[13],
-                        matrixs[14],
-                        matrixs[15])),
-                    child: AnimatedAlign(
-                      alignment:
-                          selected ? Alignment.topRight : Alignment.bottomLeft,
-                      duration: const Duration(seconds: 1),
-                      curve: Curves.fastOutSlowIn,
-                      child: const FlutterLogo(size: 50.0),
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  selected = !selected;
+                });
+              },
+              child: Stack(
+                children: [
+                  Center(
+                    child: Container(
+                      width: 250.0,
+                      height: 250.0,
+                      color: Colors.lightBlue,
+                      transform: (Matrix4(
+                          matrixs[0],
+                          matrixs[1],
+                          matrixs[2],
+                          matrixs[3],
+                          matrixs[4],
+                          matrixs[5],
+                          matrixs[6],
+                          matrixs[7],
+                          matrixs[8],
+                          matrixs[9],
+                          matrixs[10],
+                          matrixs[11],
+                          matrixs[12],
+                          matrixs[13],
+                          matrixs[14],
+                          matrixs[15])),
+                      child: AnimatedAlign(
+                        alignment: selected
+                            ? Alignment.topRight
+                            : Alignment.bottomLeft,
+                        duration: const Duration(seconds: 1),
+                        curve: Curves.fastOutSlowIn,
+                        child: const FlutterLogo(size: 50.0),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

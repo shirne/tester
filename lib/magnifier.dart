@@ -9,7 +9,7 @@ class MagnifierPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('test'),
+        title: const Text('Magnifier'),
       ),
       body: Magnifier(
         power: 2,

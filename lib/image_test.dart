@@ -4,14 +4,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class QrcodeTest extends StatefulWidget {
-  const QrcodeTest({Key? key}) : super(key: key);
+class ImageTest extends StatefulWidget {
+  const ImageTest({Key? key}) : super(key: key);
 
   @override
-  State<QrcodeTest> createState() => _QrcodeTestState();
+  State<ImageTest> createState() => _ImageTestState();
 }
 
-class _QrcodeTestState extends State<QrcodeTest> {
+class _ImageTestState extends State<ImageTest> {
   FrameInfo? frameInfo;
 
   @override
@@ -56,26 +56,29 @@ class _QrcodeTestState extends State<QrcodeTest> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset(
-          'assets/images/test.png',
-          scale: 0.05,
-        ),
-        if (frameInfo != null)
-          RawImage(
-            image: frameInfo!.image,
+    return Scaffold(
+      appBar: AppBar(title: const Text('Qrcode')),
+      body: Center(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/images/test.png',
             scale: 0.05,
           ),
-        Image.memory(Uint8List.fromList([
-          255, 0, 0, 255, 0, 255, 0, 255, //
-          0, 0, 255, 255, 255, 0, 255, 255, //
-          0, 255, 255, 255, 0, 0, 0, 0
-        ])),
-      ],
-    ));
+          if (frameInfo != null)
+            RawImage(
+              image: frameInfo!.image,
+              scale: 0.05,
+            ),
+          Image.memory(Uint8List.fromList([
+            255, 0, 0, 255, 0, 255, 0, 255, //
+            0, 0, 255, 255, 255, 0, 255, 255, //
+            0, 255, 255, 255, 0, 0, 0, 0
+          ])),
+        ],
+      )),
+    );
   }
 }

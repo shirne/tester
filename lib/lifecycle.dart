@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-class FutureTest extends StatefulWidget {
-  const FutureTest({Key? key}) : super(key: key);
+class LifecycleTest extends StatefulWidget {
+  const LifecycleTest({Key? key}) : super(key: key);
   @override
-  State<FutureTest> createState() => _FutureTestState();
+  State<LifecycleTest> createState() => _LifecycleTestState();
 }
 
-class _FutureTestState extends State<FutureTest> with WidgetsBindingObserver {
+class _LifecycleTestState extends State<LifecycleTest>
+    with WidgetsBindingObserver {
   Future<int>? future;
   Completer<int>? completer;
   String startAt = '';
