@@ -110,7 +110,7 @@ class MenuPage extends StatelessWidget {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: ((context) => const ImageTest())));
                 },
-                child: const Text('Qrcode'),
+                child: const Text('Image load'),
               ),
               ElevatedButton(
                 onPressed: () {
