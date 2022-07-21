@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// 用于复现文本排版问题
 class TextPage extends StatefulWidget {
@@ -9,6 +10,8 @@ class TextPage extends StatefulWidget {
 }
 
 class _TextPageState extends State<TextPage> {
+  String text = '';
+  TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,6 +99,47 @@ class _TextPageState extends State<TextPage> {
                 ),
               ),
             ),
+            const Text('TextField 强制换行'),
+            SizedBox(
+              width: 200,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "$text\u{200b}",
+                    textAlign: TextAlign.justify,
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                  TextField(
+                    controller: controller,
+                    maxLines: 3,
+                    textAlign: TextAlign.justify,
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
+                    inputFormatters: [
+                      TextInputFormatter.withFunction((oldValue, newValue) {
+                        if (newValue.composing.isCollapsed) {
+                          return TextEditingValue(
+                              text: Characters(
+                                      newValue.text.replaceAll('\u200b', ''))
+                                  .join("\u200b"));
+                        }
+                        return newValue;
+                      })
+                    ],
+                    onChanged: ((value) => setState(() {
+                          text = value;
+                          controller.selection = TextSelection.fromPosition(
+                              TextPosition(offset: text.length));
+                        })),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
