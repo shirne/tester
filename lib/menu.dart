@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'animate_bottom/index.dart';
 import 'animation.dart';
 import 'custom_paint.dart';
 import 'event.dart';
@@ -125,6 +126,13 @@ class MenuPage extends StatelessWidget {
                       builder: ((context) => const TextPage())));
                 },
                 child: const Text('文本空格Bug'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const AnimateBottomTest())));
+                },
+                child: const Text('Animate bottom'),
               ),
             ],
           ),
