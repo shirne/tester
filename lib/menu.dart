@@ -12,6 +12,7 @@ import 'matrix4_test.dart';
 import 'matrix_skew.dart';
 import 'object_page.dart';
 import 'image_test.dart';
+import 'page_listen.dart';
 import 'text_page.dart';
 import 'navpage/index.dart';
 
@@ -133,6 +134,13 @@ class MenuPage extends StatelessWidget {
                       builder: ((context) => const AnimateBottomTest())));
                 },
                 child: const Text('Animate bottom'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const PageViewListen())));
+                },
+                child: const Text('Pageview切换监听'),
               ),
             ],
           ),
