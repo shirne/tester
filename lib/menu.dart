@@ -4,6 +4,7 @@ import 'animate_bottom/index.dart';
 import 'animation.dart';
 import 'custom_paint.dart';
 import 'event.dart';
+import 'image_filter.dart';
 import 'isolate.dart';
 import 'lifecycle.dart';
 import 'lyric/index.dart';
@@ -149,6 +150,13 @@ class MenuPage extends StatelessWidget {
                       builder: ((context) => const TabIndexPage())));
                 },
                 child: const Text('Tab & KeepAlive'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const FilterTestPage())));
+                },
+                child: const Text('ImageFilter'),
               ),
             ],
           ),
