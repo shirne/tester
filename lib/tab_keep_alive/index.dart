@@ -17,6 +17,24 @@ class _TabIndexPageState extends State<TabIndexPage> {
   int tabIndex = 0;
   PageController controller = PageController();
   @override
+  void initState() {
+    super.initState();
+    controller.addListener(_onTabChange);
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(_onTabChange);
+    super.dispose();
+  }
+
+  _onTabChange() {
+    setState(() {
+      tabIndex = controller.page!.round();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -36,9 +54,6 @@ class _TabIndexPageState extends State<TabIndexPage> {
         onTap: (int index) {
           if (index == tabIndex) return;
           controller.jumpToPage(index);
-          setState(() {
-            tabIndex = index;
-          });
         },
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
