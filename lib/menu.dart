@@ -51,13 +51,6 @@ class MenuPage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: ((context) => const TextPage())));
-                },
-                child: const Text('文本排版Bug'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
                       builder: ((context) => const AnimationTestPage())));
                 },
                 child: const Text('弹簧动画'),

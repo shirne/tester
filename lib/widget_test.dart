@@ -42,6 +42,7 @@ class WidgetTest extends StatelessWidget {
             ),
           ),
           const Text('text'),
+          Navigator()
         ],
       ),
     );
