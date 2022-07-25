@@ -20,12 +20,13 @@ class _FilterTestPageState extends State<FilterTestPage> {
         title: const Text('Music'),
         actions: [
           TextButton(
-              onPressed: () {
-                setState(() {
-                  isShow = !isShow;
-                });
-              },
-              child: Text(isShow ? '隐藏' : '显示'))
+            onPressed: () {
+              setState(() {
+                isShow = !isShow;
+              });
+            },
+            child: Text(isShow ? '隐藏' : '显示'),
+          )
         ],
       ),
       extendBody: true,

@@ -38,12 +38,12 @@ class _ImageTestState extends State<ImageTest> {
   }
 
   rawImage() async {
-    var buffer = await ImmutableBuffer.fromUint8List(Uint8List.fromList([
+    final buffer = await ImmutableBuffer.fromUint8List(Uint8List.fromList([
       255, 0, 0, 255, 0, 255, 0, 255, //
       0, 0, 255, 255, 255, 0, 255, 255, //
       0, 255, 255, 255, 0, 0, 0, 0
     ]));
-    var descriptor = ImageDescriptor.raw(buffer,
+    final descriptor = ImageDescriptor.raw(buffer,
         width: 2, height: 3, pixelFormat: PixelFormat.rgba8888);
 
     descriptor
