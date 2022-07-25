@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'animate_bottom/index.dart';
 import 'animation.dart';
 import 'custom_paint.dart';
+import 'custom_scroll.dart';
 import 'event.dart';
 import 'image_filter.dart';
 import 'isolate.dart';
@@ -17,6 +18,7 @@ import 'page_listen.dart';
 import 'tab_keep_alive/index.dart';
 import 'text_page.dart';
 import 'navpage/index.dart';
+import 'widget_test.dart';
 
 class MenuPage extends StatelessWidget {
   const MenuPage({Key? key}) : super(key: key);
@@ -66,6 +68,13 @@ class MenuPage extends StatelessWidget {
                       builder: ((context) => const CustomPaintPage())));
                 },
                 child: const Text('Custom paint'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const WidgetTest())));
+                },
+                child: const Text('Widgets'),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -157,6 +166,13 @@ class MenuPage extends StatelessWidget {
                       builder: ((context) => const FilterTestPage())));
                 },
                 child: const Text('ImageFilter'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const CustomScrollTestPage())));
+                },
+                child: const Text('CustomScrollHeader'),
               ),
             ],
           ),
