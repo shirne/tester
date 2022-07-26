@@ -28,7 +28,7 @@ class _TextPageState extends State<TextPage> {
                 color: Colors.black26,
               ),
               child: const Text(
-                '我是一条文本',
+                '无空格文本',
                 style: TextStyle(
                   decoration: TextDecoration.underline,
                 ),
@@ -39,7 +39,7 @@ class _TextPageState extends State<TextPage> {
                 color: Colors.black26,
               ),
               child: const Text(
-                '我混排123Counter文本1。   ',
+                '混排123Counter有空格文本1。   ',
                 style: TextStyle(
                   fontFamily: 'PT Sans',
                   decoration: TextDecoration.underline,
@@ -51,7 +51,7 @@ class _TextPageState extends State<TextPage> {
                 color: Colors.black26,
               ),
               child: const Text(
-                '我是一条文本   ',
+                '有空格AlignEnd文本   ',
                 textAlign: TextAlign.end,
                 style: TextStyle(
                   decoration: TextDecoration.underline,
@@ -63,7 +63,7 @@ class _TextPageState extends State<TextPage> {
                 color: Colors.black26,
               ),
               child: const Text(
-                '我是一条文本有空格   　',
+                '宽空格结尾文本   　',
                 style: TextStyle(
                   decoration: TextDecoration.underline,
                 ),
@@ -74,7 +74,7 @@ class _TextPageState extends State<TextPage> {
                 color: Colors.black26,
               ),
               child: const Text(
-                'hello    \u{200b}',
+                '零宽字符结尾    \u{200b}',
                 style: TextStyle(
                   decoration: TextDecoration.underline,
                 ),
@@ -86,7 +86,7 @@ class _TextPageState extends State<TextPage> {
               ),
               child: const Text.rich(
                 TextSpan(
-                  text: '我是一条文本有空格    ',
+                  text: '有空格在RichText中    ',
                   children: [
                     TextSpan(
                       text: '|',
