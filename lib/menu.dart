@@ -15,6 +15,7 @@ import 'matrix_skew.dart';
 import 'object_page.dart';
 import 'image_test.dart';
 import 'page_listen.dart';
+import 'scroll_page.dart';
 import 'tab_keep_alive/index.dart';
 import 'text_page.dart';
 import 'navpage/index.dart';
@@ -166,6 +167,13 @@ class MenuPage extends StatelessWidget {
                       builder: ((context) => const CustomScrollTestPage())));
                 },
                 child: const Text('CustomScrollHeader'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const ScrollPage())));
+                },
+                child: const Text('Just a scroll page'),
               ),
             ],
           ),
