@@ -139,6 +139,7 @@ class _FilterTestPageState extends State<FilterTestPage> {
           ),
           Positioned(
             child: ListView.builder(
+              primary: true,
               itemBuilder: (BuildContext context, int index) {
                 return Center(child: Text('$index'));
               },

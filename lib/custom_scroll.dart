@@ -43,7 +43,11 @@ class _CustomScrollTestPageState extends State<CustomScrollTestPage> {
             left: 0,
             right: 0,
             child: SizedBox(
-              height: math.max(0, expandedHeight + 50 - controller.offset),
+              height: math.max(
+                  0,
+                  expandedHeight +
+                      50 -
+                      (controller.positions.isEmpty ? 0 : controller.offset)),
               child: Image.asset(
                 'assets/images/bg.jpg',
                 fit: BoxFit.fitWidth,
@@ -72,13 +76,15 @@ class _CustomScrollTestPageState extends State<CustomScrollTestPage> {
                       Positioned(
                         left: 0,
                         right: 0,
-                        top: (kToolbarHeight - 30) / 2 + (1 - progress) * 40,
+                        top: (kToolbarHeight - 30) / 2 +
+                            (1 - progress) * 40 +
+                            MediaQuery.of(context).padding.top,
                         child: Align(
                           alignment: Alignment(-1 + 2 * progress, 0),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: FlutterLogo(
-                              duration: Duration(milliseconds: 0),
+                              duration: const Duration(milliseconds: 0),
                               size: 30 + (1 - progress) * 30,
                             ),
                           ),
@@ -111,7 +117,8 @@ class _CustomScrollTestPageState extends State<CustomScrollTestPage> {
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
                     return Container(
-                      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
                       alignment: Alignment.center,
                       color: Colors.blue[200 + index % 4 * 100],
                       height: 100 + index % 4 * 20.0,

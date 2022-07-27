@@ -12,8 +12,7 @@ class LyricPage extends StatefulWidget {
 }
 
 class _LyricPageState extends State<LyricPage> {
-  final LyricModel lyricModel = LyricModel.fromText(
-      '''
+  final LyricModel lyricModel = LyricModel.fromText('''
 [ti:依赖]
 [ar:蔡健雅]
 [al:MY SPACE]
@@ -50,6 +49,12 @@ class _LyricPageState extends State<LyricPage> {
   int activeIndex = -1;
   DateTime? start;
   Timer? timer;
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
 
   _startPlay() {
     if (isStart) {
