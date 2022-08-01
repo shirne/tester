@@ -1,45 +1,46 @@
 import 'package:flutter/material.dart';
 
 import 'other.dart';
-import '../tools.dart';
+import '../../tools.dart';
 
-class Page2 extends StatefulWidget {
-  const Page2({Key? key}) : super(key: key);
+class Page3 extends StatefulWidget {
+  const Page3({Key? key}) : super(key: key);
 
   @override
-  State<Page2> createState() => _Page2State();
+  State<Page3> createState() => _Page3State();
 }
 
-class _Page2State extends State<Page2>
+class _Page3State extends State<Page3>
     with AutomaticKeepAliveClientMixin, RouteAware {
   @override
   void initState() {
     super.initState();
-    print('page2 mounted');
+
+    print('page3 mounted');
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    print('page2 subscribed');
+    print('page3 subscribed');
     routeObserver.subscribe(this, ModalRoute.of(context)!);
   }
 
   @override
   void dispose() {
-    print('page2 unmounted');
+    print('page3 unmounted');
     routeObserver.unsubscribe(this);
     super.dispose();
   }
 
   @override
   void didPush() {
-    print('page2 $mounted didPush');
+    print('page3 $mounted didPush');
   }
 
   @override
   void didPopNext() {
-    print('page2 $mounted didPopNext');
+    print('page3 $mounted didPopNext');
   }
 
   @override
@@ -49,7 +50,7 @@ class _Page2State extends State<Page2>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('Page 2'),
+          const Text('Page 3'),
           ElevatedButton(
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {

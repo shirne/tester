@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'widgets/magnifier.dart';
+import '../widgets/magnifier.dart';
 
 class MagnifierPage extends StatelessWidget {
   const MagnifierPage({Key? key}) : super(key: key);

@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 
-import 'animate_bottom/index.dart';
-import 'animation.dart';
-import 'custom_paint.dart';
-import 'custom_scroll.dart';
-import 'event.dart';
-import 'image_filter.dart';
-import 'isolate.dart';
-import 'lifecycle.dart';
-import 'lyric/index.dart';
-import 'magnifier.dart';
-import 'matrix4_test.dart';
-import 'matrix_skew.dart';
-import 'object_page.dart';
-import 'image_test.dart';
-import 'page_listen.dart';
-import 'scroll_page.dart';
-import 'tab_keep_alive/index.dart';
-import 'text_page.dart';
-import 'navpage/index.dart';
-import 'widget_test.dart';
+import 'pages/animate_bottom/index.dart';
+import 'pages/animation.dart';
+import 'pages/custom_paint.dart';
+import 'pages/custom_scroll.dart';
+import 'pages/event.dart';
+import 'pages/image_filter.dart';
+import 'pages/isolate.dart';
+import 'pages/lifecycle.dart';
+import 'pages/lyric/index.dart';
+import 'pages/magnifier.dart';
+import 'pages/matrix4_test.dart';
+import 'pages/matrix_skew.dart';
+import 'pages/object_page.dart';
+import 'pages/image_test.dart';
+import 'pages/page_listen.dart';
+import 'pages/scroll_page.dart';
+import 'pages/tab_keep_alive/index.dart';
+import 'pages/text_page.dart';
+import 'pages/navpage/index.dart';
+import 'pages/widget_test.dart';
 
 class MenuPage extends StatelessWidget {
   const MenuPage({Key? key}) : super(key: key);

@@ -1,10 +1,9 @@
-import 'package:flutest/tab_keep_alive/cate.dart';
-import 'package:flutest/tab_keep_alive/home.dart';
-import 'package:flutest/tab_keep_alive/news.dart';
-import 'package:flutest/tab_keep_alive/user.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
+import 'cate.dart';
+import 'home.dart';
+import 'news.dart';
+import 'user.dart';
 
 class TabIndexPage extends StatefulWidget {
   const TabIndexPage({Key? key}) : super(key: key);
@@ -38,7 +37,7 @@ class _TabIndexPageState extends State<TabIndexPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tab Header'),
+        title: const Text('Tab Header'),
       ),
       body: PageView(
         controller: controller,

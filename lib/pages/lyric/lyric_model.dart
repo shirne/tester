@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../tools.dart';
+import '../../tools.dart';
 
 class LyricModel {
   final String? title;

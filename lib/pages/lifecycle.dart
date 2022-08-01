@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'fundation/main_channel.dart';
+import '../fundation/main_channel.dart';
 
 class LifecycleTest extends StatefulWidget {
   const LifecycleTest({Key? key}) : super(key: key);
