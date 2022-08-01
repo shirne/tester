@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'fundation/main_channel.dart';
+
 class LifecycleTest extends StatefulWidget {
   const LifecycleTest({Key? key}) : super(key: key);
   @override
@@ -80,11 +82,23 @@ class _LifecycleTestState extends State<LifecycleTest>
           Center(child: SizedBox(width: 300, child: Text('start at:$startAt'))),
           Center(child: SizedBox(width: 300, child: Text('timeout:$endAt'))),
           Center(
-            child: ElevatedButton(
-              onPressed: () {
-                _startFuture();
-              },
-              child: const Text('start'),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    _startFuture();
+                  },
+                  child: const Text('start'),
+                ),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    MainChannel.openOther();
+                  },
+                  child: const Text('Open other page'),
+                ),
+              ],
             ),
           )
         ],
