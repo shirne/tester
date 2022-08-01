@@ -14,28 +14,23 @@ class ScrollPage extends StatelessWidget {
           primary: true,
           itemBuilder: (BuildContext context, int index) {
             if (index == 1) {
-              return Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.blue[200 + index % 4 * 100],
-                    borderRadius: BorderRadius.circular(0.1),
-                  ),
-                  height: 100 + index % 4 * 20.0,
-                  child: Text('Item: $index ok?'),
-                ),
-              );
-            }
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Container(
+              return Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 alignment: Alignment.center,
-                color: Colors.blue[200 + index % 4 * 100],
+                decoration: BoxDecoration(
+                  color: Colors.blue[200 + index % 4 * 100],
+                  borderRadius: BorderRadius.circular(15),
+                ),
                 height: 100 + index % 4 * 20.0,
                 child: Text('Item: $index'),
-              ),
+              );
+            }
+            return Container(
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              alignment: Alignment.center,
+              color: Colors.blue[200 + index % 4 * 100],
+              height: 100 + index % 4 * 20.0,
+              child: Text('Item: $index'),
             );
           },
         ),
