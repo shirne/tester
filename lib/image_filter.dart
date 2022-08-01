@@ -10,7 +10,7 @@ class FilterTestPage extends StatefulWidget {
 }
 
 class _FilterTestPageState extends State<FilterTestPage> {
-  bool isShow = true;
+  int coverIndex = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,10 +22,17 @@ class _FilterTestPageState extends State<FilterTestPage> {
           TextButton(
             onPressed: () {
               setState(() {
-                isShow = !isShow;
+                if (coverIndex >= 3) {
+                  coverIndex = 1;
+                } else {
+                  coverIndex++;
+                }
               });
             },
-            child: Text(isShow ? '隐藏' : '显示'),
+            child: const Text(
+              '切换',
+              style: TextStyle(color: Colors.white),
+            ),
           )
         ],
       ),
@@ -36,112 +43,70 @@ class _FilterTestPageState extends State<FilterTestPage> {
         children: [
           /// 背景
           Positioned(
-            child: FittedBox(
-              fit: BoxFit.fill,
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            child: ImageFiltered(
+              imageFilter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
               child: Image.asset(
-                'assets/images/bg.jpg',
+                'assets/images/cover$coverIndex.jpeg',
+                fit: BoxFit.fill,
               ),
             ),
           ),
 
-          /// 第一层filter，硬边缘，上下尺寸小一点
           Positioned(
-            child: AnimatedOpacity(
-              opacity: isShow ? 1 : 0,
-              duration: Duration(milliseconds: 500),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Container(
-                    height: 150,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: const BoxDecoration(
-                      color: Colors.transparent,
-                    ),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(
-                        sigmaX: 20,
-                        sigmaY: 20,
-                        tileMode: TileMode.clamp,
-                      ),
-                      child: Container(
-                        height: 150,
-                      ),
-                    ),
-                  ),
-                  const Spacer(),
-                  Container(
-                    height: 150,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: const BoxDecoration(
-                      color: Colors.transparent,
-                    ),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                      child: Container(
-                        height: 150,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          /// 第二层filter, 软边缘
-          Positioned(
-            child: AnimatedOpacity(
-              opacity: isShow ? 1 : 0,
-              duration: Duration(milliseconds: 500),
-              child: Column(
-                children: [
-                  ImageFiltered(
-                    imageFilter: ImageFilter.blur(
-                      sigmaX: 20,
-                      sigmaY: 20,
-                      tileMode: TileMode.decal,
-                    ),
-                    child: Container(
-                      height: 200,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.fitWidth,
-                          image: AssetImage(
-                            'assets/images/bg.jpg',
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Spacer(),
-                  ImageFiltered(
-                    imageFilter: ImageFilter.blur(
-                      sigmaX: 20,
-                      sigmaY: 20,
-                      tileMode: TileMode.decal,
-                    ),
-                    child: Container(
-                      height: 200,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          alignment: Alignment.bottomCenter,
-                          fit: BoxFit.fitWidth,
-                          image: AssetImage(
-                            'assets/images/bg.jpg',
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            child: ShaderMask(
+              shaderCallback: (rect) {
+                final ratio =
+                    0.5 * (rect.right - rect.left) / (rect.bottom - rect.top) -
+                        0.05;
+                return LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: const [
+                    Colors.transparent,
+                    Colors.transparent,
+                    Colors.white,
+                    Colors.white,
+                    Colors.transparent,
+                    Colors.transparent,
+                  ],
+                  stops: [
+                    0,
+                    ratio,
+                    ratio + 0.1,
+                    (1 - ratio) - 0.1,
+                    1 - ratio,
+                    1
+                  ],
+                ).createShader(rect);
+              },
+              blendMode: BlendMode.dstIn,
+              child: Image.asset(
+                'assets/images/cover$coverIndex.jpeg',
+                fit: BoxFit.contain,
               ),
             ),
           ),
           Positioned(
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
             child: ListView.builder(
               primary: true,
               itemBuilder: (BuildContext context, int index) {
-                return Center(child: Text('$index'));
+                return Center(
+                    child: Text(
+                  '$index',
+                  style: const TextStyle(color: Colors.white),
+                ));
               },
             ),
           ),
