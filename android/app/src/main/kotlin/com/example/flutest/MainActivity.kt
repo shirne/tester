@@ -12,7 +12,7 @@ class MainActivity: FlutterActivity() {
 
     private val CHANNEL = "com.shirne.tester/channel"
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
-        registerWith(flutterEngine);
+        super.configureFlutterEngine(flutterEngine);
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { methodCall, result ->
             if (methodCall.method == "openOther") {
                 // 打开页面
