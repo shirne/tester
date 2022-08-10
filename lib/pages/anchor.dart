@@ -143,8 +143,8 @@ class _AnchorPageState extends State<AnchorPage>
               (context, index) => Item(index),
               childCount: 9,
             ),
-            gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3),
           ),
           SliverToBoxAdapter(
             child: Text(
@@ -156,8 +156,8 @@ class _AnchorPageState extends State<AnchorPage>
             delegate: SliverChildBuilderDelegate(
                 (context, index) => Item(index),
                 childCount: 8),
-            gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2),
           ),
         ],
       ),

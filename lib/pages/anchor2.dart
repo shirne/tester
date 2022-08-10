@@ -93,7 +93,7 @@ class _Anchor2PageState extends State<Anchor2Page>
             pinned: true,
             expandedHeight: expandedHeight,
             collapsedHeight: kToolbarHeight,
-            title: Text('test'),
+            title: const Text('test'),
             flexibleSpace: const FlexibleSpaceBar(
               //title: Text('test'),
               expandedTitleScale: 1,
@@ -125,8 +125,8 @@ class _Anchor2PageState extends State<Anchor2Page>
               (context, index) => Item(index),
               childCount: 9,
             ),
-            gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3),
           ),
           SliverToBoxAdapter(
             child: Text(
@@ -138,8 +138,8 @@ class _Anchor2PageState extends State<Anchor2Page>
             delegate: SliverChildBuilderDelegate(
                 (context, index) => Item(index),
                 childCount: 8),
-            gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2),
           ),
         ],
       ),
@@ -158,7 +158,7 @@ class Item extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(color: Colors.primaries[index % 18]),
       child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           child: Text('text $index')),
     );
   }
