@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'pages/anchor.dart';
 import 'pages/animate_bottom/index.dart';
 import 'pages/animation.dart';
 import 'pages/custom_paint.dart';
@@ -174,6 +175,13 @@ class MenuPage extends StatelessWidget {
                       builder: ((context) => const ScrollPage())));
                 },
                 child: const Text('Just a scroll page'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const AnchorPage())));
+                },
+                child: const Text('TabBar with Anchor'),
               ),
             ],
           ),
