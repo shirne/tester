@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-class AnchorPage extends StatefulWidget {
-  const AnchorPage({Key? key}) : super(key: key);
+class Anchor2Page extends StatefulWidget {
+  const Anchor2Page({Key? key}) : super(key: key);
 
   @override
-  State<AnchorPage> createState() => _AnchorPageState();
+  State<Anchor2Page> createState() => _Anchor2PageState();
 }
 
-class _AnchorPageState extends State<AnchorPage>
+class _Anchor2PageState extends State<Anchor2Page>
     with SingleTickerProviderStateMixin {
   final keys = <GlobalKey>[
     GlobalKey(debugLabel: 'tab1'),
@@ -20,10 +20,8 @@ class _AnchorPageState extends State<AnchorPage>
 
   static const expandedHeight = 240.0;
 
+  double? tabBarHeight;
   double offset = 50;
-  double collapseStep = 0;
-
-  bool isTabClicked = false;
 
   @override
   void initState() {
@@ -43,28 +41,15 @@ class _AnchorPageState extends State<AnchorPage>
         ?.findAncestorRenderObjectOfType<RenderSliverToBoxAdapter>();
     if (keyRenderObject != null) {
       // 点击的时候不让滚动影响tab
-      isTabClicked = true;
+      scrollController.removeListener(_onScroll);
       scrollController.position
           .ensureVisible(keyRenderObject,
               duration: const Duration(milliseconds: 300), curve: Curves.easeIn)
-          .then((value) {
-        isTabClicked = false;
-      });
+          .then((value) => scrollController.addListener(_onScroll));
     }
   }
 
   void _onScroll() {
-    double newStep = 0;
-    if (scrollController.offset > expandedHeight - kToolbarHeight * 2) {
-      newStep = scrollController.offset > expandedHeight - kToolbarHeight
-          ? 1
-          : (scrollController.offset - (expandedHeight - kToolbarHeight * 2)) /
-              kToolbarHeight;
-    }
-    setState(() {
-      collapseStep = newStep;
-    });
-    if (isTabClicked) return;
     int i = 0;
     for (; i < keys.length; i++) {
       final keyRenderObject = keys[i]
@@ -74,7 +59,7 @@ class _AnchorPageState extends State<AnchorPage>
         final offsetY = (keyRenderObject.parentData as SliverPhysicalParentData)
             .paintOffset
             .dy;
-        if (offsetY > kToolbarHeight + offset) {
+        if (offsetY > kToolbarHeight + (tabBarHeight ?? 0) + offset) {
           break;
         }
       }
@@ -99,7 +84,7 @@ class _AnchorPageState extends State<AnchorPage>
         Tab(child: Text('Tab3')),
       ],
     );
-
+    tabBarHeight = tabBar.preferredSize.height;
     return Scaffold(
       body: CustomScrollView(
         controller: scrollController,
@@ -108,18 +93,15 @@ class _AnchorPageState extends State<AnchorPage>
             pinned: true,
             expandedHeight: expandedHeight,
             collapsedHeight: kToolbarHeight,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Container(
-                height: kToolbarHeight,
-                alignment: Alignment.center,
-                child: tabBar,
-              ),
+            title: Text('test'),
+            flexibleSpace: const FlexibleSpaceBar(
+              //title: Text('test'),
               expandedTitleScale: 1,
-              titlePadding: EdgeInsets.only(left: 50 * collapseStep),
-              background: const FittedBox(
+              background: FittedBox(
                 child: FlutterLogo(),
               ),
             ),
+            bottom: tabBar,
           ),
           SliverToBoxAdapter(
             child: Text(
