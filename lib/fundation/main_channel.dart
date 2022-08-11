@@ -4,11 +4,14 @@ class MainChannel {
   // 初始化通信管道
   static const channel = "com.shirne.tester/channel";
 
-  static Future<bool> openOther() async {
+  static Future<bool> openOther(String title, [List<dynamic>? data]) async {
     const platform = MethodChannel(channel);
 
     try {
-      final bool out = await platform.invokeMethod('openOther');
+      final bool out = await platform.invokeMethod(
+        'openOther',
+        {'title': title, if (data != null) 'data': data},
+      );
 
       if (out) print('打开新页面');
     } on PlatformException catch (e) {
