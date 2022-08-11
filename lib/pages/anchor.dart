@@ -10,6 +10,7 @@ class AnchorPage extends StatefulWidget {
 
 class _AnchorPageState extends State<AnchorPage>
     with SingleTickerProviderStateMixin {
+  /// 预定义一组GlobalKey，用于锚点
   final keys = <GlobalKey>[
     GlobalKey(debugLabel: 'tab1'),
     GlobalKey(debugLabel: 'tab2'),
@@ -20,7 +21,10 @@ class _AnchorPageState extends State<AnchorPage>
 
   static const expandedHeight = 240.0;
 
+  /// 触发距离
   double offset = 50;
+
+  /// 控制tabbar的左侧缩进，防止与返回箭头重叠
   double collapseStep = 0;
 
   bool isTabClicked = false;
@@ -116,13 +120,17 @@ class _AnchorPageState extends State<AnchorPage>
               ),
               expandedTitleScale: 1,
               titlePadding: EdgeInsets.only(left: 50 * collapseStep),
-              background: const FittedBox(
-                child: FlutterLogo(),
+              collapseMode: CollapseMode.pin,
+              background: const Padding(
+                padding: EdgeInsets.symmetric(vertical: kToolbarHeight),
+                child: FittedBox(
+                  child: FlutterLogo(),
+                ),
               ),
             ),
           ),
           SliverToBoxAdapter(
-            child: Text(
+            child: ListTitle(
               'List 1',
               key: keys[0],
             ),
@@ -133,7 +141,7 @@ class _AnchorPageState extends State<AnchorPage>
                 childCount: 8),
           ),
           SliverToBoxAdapter(
-            child: Text(
+            child: ListTitle(
               'List 2',
               key: keys[1],
             ),
@@ -147,7 +155,7 @@ class _AnchorPageState extends State<AnchorPage>
                 crossAxisCount: 3),
           ),
           SliverToBoxAdapter(
-            child: Text(
+            child: ListTitle(
               'List 3',
               key: keys[2],
             ),
@@ -165,6 +173,54 @@ class _AnchorPageState extends State<AnchorPage>
   }
 }
 
+/// 标题组件
+class ListTitle extends StatelessWidget {
+  final String text;
+  const ListTitle(this.text, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+      padding: const EdgeInsets.only(left: 8),
+      decoration: const TitleDecoration(),
+      child: Text(text),
+    );
+  }
+}
+
+/// 标题锚点的装饰
+class TitleDecoration extends Decoration {
+  final double? width;
+  final Color? color;
+  const TitleDecoration({
+    this.width,
+    this.color,
+  });
+  @override
+  BoxPainter createBoxPainter([VoidCallback? onChanged]) {
+    return TitleBoxPainter(this);
+  }
+}
+
+class TitleBoxPainter extends BoxPainter {
+  final TitleDecoration decoration;
+  TitleBoxPainter(this.decoration);
+  @override
+  void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+          Rect.fromLTWH(offset.dx, offset.dy, decoration.width ?? 4,
+              configuration.size?.height ?? 0),
+          const Radius.circular(8)),
+      Paint()
+        ..color = decoration.color ?? Colors.blue
+        ..style = PaintingStyle.fill,
+    );
+  }
+}
+
+/// 测试用，显示元素
 class Item extends StatelessWidget {
   const Item(this.index, {Key? key}) : super(key: key);
 
@@ -176,7 +232,7 @@ class Item extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(color: Colors.primaries[index % 18]),
       child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           child: Text('text $index')),
     );
   }
