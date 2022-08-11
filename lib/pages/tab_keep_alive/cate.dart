@@ -13,7 +13,7 @@ class _CatePageState extends State<CatePage> {
   void initState() {
     super.initState();
     print('cate init');
-    Future.delayed(Duration(seconds: 3)).then((value) {
+    Future.delayed(const Duration(seconds: 3)).then((value) {
       if (!mounted) return;
       setState(() {
         isLoaded = true;
