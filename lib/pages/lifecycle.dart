@@ -94,7 +94,15 @@ class _LifecycleTestState extends State<LifecycleTest>
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
-                    MainChannel.openOther();
+                    MainChannel.openOther("title", [
+                      'a',
+                      'b',
+                      'c',
+                      {
+                        'a': 1,
+                        'b': [1, 2, 3]
+                      }
+                    ]);
                   },
                   child: const Text('Open other page'),
                 ),

@@ -43,7 +43,7 @@ class _AnimationTestPageState extends State<AnimationTestPage> {
           ),
           Row(
             children: [
-              Text("damping"),
+              const Text("damping"),
               Expanded(
                 child: Slider(
                   label: "damping",
@@ -62,7 +62,7 @@ class _AnimationTestPageState extends State<AnimationTestPage> {
           ),
           Row(
             children: [
-              Text("mass"),
+              const Text("mass"),
               Expanded(
                 child: Slider(
                   label: "mass",
@@ -81,7 +81,7 @@ class _AnimationTestPageState extends State<AnimationTestPage> {
           ),
           Row(
             children: [
-              Text("stiffness"),
+              const Text("stiffness"),
               Expanded(
                 child: Slider(
                   label: "stiffness",

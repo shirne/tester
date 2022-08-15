@@ -16,7 +16,7 @@ class GalleryPage extends StatefulWidget {
 class _GalleryPageState extends State<GalleryPage> {
   bool _isImage = false;
   bool _isLoading = false;
-  int _itemCount = 200;
+  final int _itemCount = 200;
   List<String> avatars = [];
   late ImageProvider transImage;
 

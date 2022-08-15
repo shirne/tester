@@ -37,14 +37,14 @@ class MagnifierPage extends StatelessWidget {
                   height: 200,
                 ),
               ),
-              Center(
+              const Center(
                   child: SizedBox(
                       width: 300,
                       child: Text('text1,text1,text1,text1,text1,text1'))),
-              Center(
+              const Center(
                   child: SizedBox(
                       width: 300, child: Text('text2,text2,text2,text2'))),
-              Center(
+              const Center(
                   child:
                       SizedBox(width: 300, child: Text('text3,text3,text3'))),
               Center(

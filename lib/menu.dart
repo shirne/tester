@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'pages/anchor.dart';
+import 'pages/anchor2.dart';
 import 'pages/animate_bottom/index.dart';
 import 'pages/animation.dart';
 import 'pages/custom_paint.dart';
@@ -206,22 +208,19 @@ class _MenuPageState extends State<MenuPage> {
                 },
                 child: Text('ShotScreen'),
               ),
-              MediaQuery(
-                data: MediaQueryData(size: Size(200, 200)),
-                child: Builder(builder: (context) {
-                  print(MediaQuery.of(context).size);
-                  print(size);
-                  if (size == null) {
-                    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                      size = context.size;
-                      (context as Element).markNeedsBuild();
-                    });
-                  }
-                  return SizedBox(
-                    width: size?.width ?? 120,
-                    height: size?.height ?? 120,
-                  );
-                }),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const AnchorPage())));
+                },
+                child: const Text('TabBar with Anchor'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const Anchor2Page())));
+                },
+                child: const Text('TabBar at AppBar\'s bottom with Anchor'),
               ),
             ],
           ),
