@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       scrollBehavior: _CustomScrollBehavior(),
       navigatorObservers: [routeObserver],
       home: const MenuPage(),

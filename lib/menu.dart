@@ -4,6 +4,7 @@ import 'pages/animate_bottom/index.dart';
 import 'pages/animation.dart';
 import 'pages/custom_paint.dart';
 import 'pages/custom_scroll.dart';
+import 'pages/custom_scroll_text_field.dart';
 import 'pages/event.dart';
 import 'pages/image_filter.dart';
 import 'pages/isolate.dart';
@@ -15,15 +16,23 @@ import 'pages/matrix_skew.dart';
 import 'pages/object_page.dart';
 import 'pages/image_test.dart';
 import 'pages/page_listen.dart';
+import 'pages/screen_shot.dart';
 import 'pages/scroll_page.dart';
 import 'pages/tab_keep_alive/index.dart';
+import 'pages/tab_view.dart';
 import 'pages/text_page.dart';
 import 'pages/navpage/index.dart';
 import 'pages/widget_test.dart';
 
-class MenuPage extends StatelessWidget {
+class MenuPage extends StatefulWidget {
   const MenuPage({Key? key}) : super(key: key);
 
+  @override
+  State<MenuPage> createState() => _MenuPageState();
+}
+
+class _MenuPageState extends State<MenuPage> {
+  Size? size;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -171,9 +180,48 @@ class MenuPage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) =>
+                          const CustomScrollTextFieldPage())));
+                },
+                child: const Text('CustomScroll With TextField in Header'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
                       builder: ((context) => const ScrollPage())));
                 },
                 child: const Text('Just a scroll page'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const TabViewPage())));
+                },
+                child: const Text('Tab View Page'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const ShotScreen())));
+                },
+                child: Text('ShotScreen'),
+              ),
+              MediaQuery(
+                data: MediaQueryData(size: Size(200, 200)),
+                child: Builder(builder: (context) {
+                  print(MediaQuery.of(context).size);
+                  print(size);
+                  if (size == null) {
+                    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                      size = context.size;
+                      (context as Element).markNeedsBuild();
+                    });
+                  }
+                  return SizedBox(
+                    width: size?.width ?? 120,
+                    height: size?.height ?? 120,
+                  );
+                }),
               ),
             ],
           ),

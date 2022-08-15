@@ -97,7 +97,7 @@ class _CustomScrollTestPageState extends State<CustomScrollTestPage> {
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: 16 + progress * 32),
-                          child: SizedBox(
+                          child: const SizedBox(
                             height: kToolbarHeight,
                             child: Align(
                               alignment: Alignment.centerLeft,
