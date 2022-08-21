@@ -11,6 +11,7 @@ import 'pages/event.dart';
 import 'pages/image_filter.dart';
 import 'pages/isolate.dart';
 import 'pages/lifecycle.dart';
+import 'pages/list_page.dart';
 import 'pages/lyric/index.dart';
 import 'pages/magnifier.dart';
 import 'pages/matrix4_test.dart';
@@ -221,6 +222,13 @@ class _MenuPageState extends State<MenuPage> {
                       builder: ((context) => const Anchor2Page())));
                 },
                 child: const Text('TabBar at AppBar\'s bottom with Anchor'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const ListTestPage())));
+                },
+                child: const Text('List Page'),
               ),
             ],
           ),

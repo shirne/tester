@@ -44,6 +44,7 @@ dependencies:
   event_bus: ^2.0.0
   zxing_lib: ^0.7.0
   screenshot: 1.2.3
+  logging: ^1.0.2
 
 dev_dependencies:
   flutter_test:
