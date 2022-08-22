@@ -8,6 +8,7 @@ import 'pages/custom_paint.dart';
 import 'pages/custom_scroll.dart';
 import 'pages/custom_scroll_text_field.dart';
 import 'pages/event.dart';
+import 'pages/focus_to_screen.dart';
 import 'pages/image_filter.dart';
 import 'pages/isolate.dart';
 import 'pages/lifecycle.dart';
@@ -207,7 +208,7 @@ class _MenuPageState extends State<MenuPage> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: ((context) => const ShotScreen())));
                 },
-                child: Text('ShotScreen'),
+                child: const Text('ShotScreen'),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -229,6 +230,13 @@ class _MenuPageState extends State<MenuPage> {
                       builder: ((context) => const ListTestPage())));
                 },
                 child: const Text('List Page'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const FocusToScreenPage())));
+                },
+                child: const Text('FocusToScreen'),
               ),
             ],
           ),
