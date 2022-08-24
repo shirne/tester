@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
 
 import '../fundation/keyboard_observe.dart';
 
@@ -196,17 +195,21 @@ class _FocusToScreenPageState extends State<FocusToScreenPage>
                   childCount: 30,
                 ),
               ),
-              SliverToBoxAdapter(
-                child: ValueListenableBuilder<double>(
-                  valueListenable: keyboardNotifier,
-                  builder: (context, value, child) {
-                    print('bottom placeholder: $value');
-                    return SizedBox(height: value);
-                  },
-                ),
-              ),
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: ValueListenableBuilder<double>(
+        valueListenable: keyboardNotifier,
+        builder: (context, value, child) {
+          print('bottom placeholder: $value');
+          return SizedBox(
+            height: value,
+            child: child,
+          );
+        },
+        child: Container(
+          color: Colors.black12,
         ),
       ),
     );
