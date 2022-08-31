@@ -8,17 +8,32 @@ class PageViewListen extends StatefulWidget {
 }
 
 class _PageViewListenState extends State<PageViewListen> {
-  PageController controller = PageController();
+  PageController controller = PageController(initialPage: 4);
+  int pageCount = 5;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('pageview')),
-      body: PageView.builder(
-          controller: controller,
-          scrollDirection: Axis.vertical,
-          itemBuilder: (context, index) {
-            return ItemBuilder(index, controller);
-          }),
+      appBar: AppBar(
+        title: const Text('pageview'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                pageCount++;
+              });
+            },
+            icon: const Icon(Icons.add),
+          ),
+        ],
+      ),
+      body: PageView(
+        controller: controller,
+        scrollDirection: Axis.vertical,
+        children: List.generate(
+          pageCount,
+          (index) => ItemBuilder(index, controller),
+        ),
+      ),
     );
   }
 }

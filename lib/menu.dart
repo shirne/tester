@@ -27,6 +27,7 @@ import 'pages/tab_view.dart';
 import 'pages/text_page.dart';
 import 'pages/navpage/index.dart';
 import 'pages/widget_test.dart';
+import 'pages/date_picker.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({Key? key}) : super(key: key);
@@ -237,6 +238,13 @@ class _MenuPageState extends State<MenuPage> {
                       builder: ((context) => const FocusToScreenPage())));
                 },
                 child: const Text('FocusToScreen'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const DatePickerPage())));
+                },
+                child: const Text('DatePicker'),
               ),
             ],
           ),
