@@ -23,6 +23,7 @@ import 'pages/page_listen.dart';
 import 'pages/screen_shot.dart';
 import 'pages/scroll_page.dart';
 import 'pages/tab_keep_alive/index.dart';
+import 'pages/tab_scroll.dart';
 import 'pages/tab_view.dart';
 import 'pages/text_page.dart';
 import 'pages/navpage/index.dart';
@@ -224,6 +225,13 @@ class _MenuPageState extends State<MenuPage> {
                       builder: ((context) => const Anchor2Page())));
                 },
                 child: const Text('TabBar at AppBar\'s bottom with Anchor'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const TabScrollPage())));
+                },
+                child: const Text('Tab Scroll Page'),
               ),
               ElevatedButton(
                 onPressed: () {
