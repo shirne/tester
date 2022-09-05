@@ -1,3 +1,4 @@
+import 'package:flutest/pages/tab_scroll_extended.dart';
 import 'package:flutter/material.dart';
 
 class TabScrollPage extends StatefulWidget {
@@ -27,11 +28,26 @@ class _TabScrollPageState extends State<TabScrollPage> {
                 // scroll view thinks it has not been scrolled.
                 // This is not necessary if the "headerSliverBuilder" only builds
                 // widgets that do not overlap the next sliver.
-                handle:
-                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                  context,
+                ),
                 sliver: SliverAppBar(
-                  title:
-                      const Text('Books'), // This is the title in the app bar.
+                  title: const Text('Books'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) {
+                            return const TabScrollExtendedPage();
+                          },
+                        ));
+                      },
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.white,
+                      ),
+                      child: const Text('Extended'),
+                    )
+                  ],
                   pinned: true,
                   expandedHeight: 150.0,
                   // The "forceElevated" property causes the SliverAppBar to show
