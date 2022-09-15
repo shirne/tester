@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData.light().copyWith(visualDensity: VisualDensity.standard),
       scrollBehavior: _CustomScrollBehavior(),
       navigatorObservers: [routeObserver],
       home: const MenuPage(),

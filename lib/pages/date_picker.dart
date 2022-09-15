@@ -1,8 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class DatePickerPage extends StatefulWidget {
   const DatePickerPage({Key? key}) : super(key: key);
@@ -27,7 +24,7 @@ class _DatePickerPageState extends State<DatePickerPage> {
               dateMode = v;
             }),
           ),
-          Text('DatePicker在createState中添加了创建State的逻辑，所以不能动态更改mode'),
+          const Text('DatePicker在createState中添加了创建State的逻辑，所以不能动态更改mode'),
           Expanded(
             child: SingleChildScrollView(
               child: CupertinoDatePicker(
