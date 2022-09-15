@@ -9,6 +9,7 @@ import 'pages/custom_scroll.dart';
 import 'pages/custom_scroll_text_field.dart';
 import 'pages/event.dart';
 import 'pages/focus_to_screen.dart';
+import 'pages/gradient_button_page.dart';
 import 'pages/image_filter.dart';
 import 'pages/isolate.dart';
 import 'pages/lifecycle.dart';
@@ -21,6 +22,7 @@ import 'pages/object_page.dart';
 import 'pages/image_test.dart';
 import 'pages/page_listen.dart';
 import 'pages/screen_shot.dart';
+import 'pages/scroll_behavior.dart';
 import 'pages/scroll_page.dart';
 import 'pages/tab_keep_alive/index.dart';
 import 'pages/tab_scroll.dart';
@@ -236,6 +238,13 @@ class _MenuPageState extends State<MenuPage> {
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const ScrollBehaviorPage())));
+                },
+                child: const Text('Scroll Behavior Page'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
                       builder: ((context) => const ListTestPage())));
                 },
                 child: const Text('List Page'),
@@ -253,6 +262,13 @@ class _MenuPageState extends State<MenuPage> {
                       builder: ((context) => const DatePickerPage())));
                 },
                 child: const Text('DatePicker'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const GradientButtonPage())));
+                },
+                child: const Text('Gradient Button'),
               ),
             ],
           ),
