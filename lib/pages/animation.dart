@@ -32,11 +32,7 @@ class _AnimationTestPageState extends State<AnimationTestPage> {
                   mass: mass,
                   stiffness: stiffness,
                 ),
-                child: Image.network(
-                  'https://www.htobao.net/attachment/images/1/2021/02/MPuB1T069fBY96yY1zapaN9qohhOPz.png?x-oss-process=style/normal',
-                  width: 300,
-                  height: 200,
-                ),
+                child: const FlutterLogo(size: 200),
               ),
             ),
           ),
