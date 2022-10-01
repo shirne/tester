@@ -18,6 +18,7 @@ import 'pages/lyric/index.dart';
 import 'pages/magnifier.dart';
 import 'pages/matrix4_test.dart';
 import 'pages/matrix_skew.dart';
+import 'pages/move.dart';
 import 'pages/object_page.dart';
 import 'pages/image_test.dart';
 import 'pages/page_listen.dart';
@@ -269,6 +270,13 @@ class _MenuPageState extends State<MenuPage> {
                       builder: ((context) => const GradientButtonPage())));
                 },
                 child: const Text('Gradient Button'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const MoveTestPage())));
+                },
+                child: const Text('Move Button'),
               ),
             ],
           ),
