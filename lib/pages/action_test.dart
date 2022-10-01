@@ -145,7 +145,8 @@ class _ActionTestWidgetState extends State<ActionTestWidget> {
                         onPressed: () {},
                         child: const Text('test button'),
                         style: OutlinedButton.styleFrom(
-                          primary: Theme.of(context).colorScheme.primary,
+                          foregroundColor:
+                              Theme.of(context).colorScheme.primary,
                           side: BorderSide(
                               color: Theme.of(context).colorScheme.primary),
                           shape: const RoundedRectangleBorder(
@@ -161,7 +162,8 @@ class _ActionTestWidgetState extends State<ActionTestWidget> {
                         onPressed: () {},
                         child: const Text('test button'),
                         style: OutlinedButton.styleFrom(
-                          primary: Theme.of(context).colorScheme.primary,
+                          foregroundColor:
+                              Theme.of(context).colorScheme.primary,
                           side: BorderSide(
                               color: Theme.of(context).colorScheme.primary),
                           shape: const ContinuousRectangleBorder(
@@ -177,7 +179,8 @@ class _ActionTestWidgetState extends State<ActionTestWidget> {
                         onPressed: () {},
                         child: const Text('test button'),
                         style: OutlinedButton.styleFrom(
-                          primary: Theme.of(context).colorScheme.primary,
+                          foregroundColor:
+                              Theme.of(context).colorScheme.primary,
                           side: BorderSide(
                               color: Theme.of(context).colorScheme.primary),
                           shape: const BeveledRectangleBorder(
@@ -192,7 +195,8 @@ class _ActionTestWidgetState extends State<ActionTestWidget> {
                         onPressed: () {},
                         child: const Text('test button'),
                         style: OutlinedButton.styleFrom(
-                          primary: Theme.of(context).colorScheme.primary,
+                          foregroundColor:
+                              Theme.of(context).colorScheme.primary,
                           side: BorderSide(
                               color: Theme.of(context).colorScheme.primary),
                           shape: const StadiumBorder(),

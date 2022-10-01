@@ -13,6 +13,8 @@ const expandedHeight = 160.0;
 class _CustomScrollTestPageState extends State<CustomScrollTestPage> {
   ScrollController controller = ScrollController();
   double progress = 0;
+
+  bool isLock = true;
   @override
   void initState() {
     super.initState();
@@ -125,6 +127,34 @@ class _CustomScrollTestPageState extends State<CustomScrollTestPage> {
                       child: Text('Item: $index'),
                     );
                   },
+                  childCount: 3,
+                ),
+              ),
+              SliverFillRemaining(
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: (notification) {
+                    setState(() {
+                      isLock = true;
+                    });
+                    return true;
+                  },
+                  child: GestureDetector(
+                    onPanStart: (details) {},
+                    onPanUpdate: (details) {},
+                    onPanEnd: (details) {},
+                    child: PageView(
+                      children: List.generate(
+                        4,
+                        (pageIndex) => ListView.builder(
+                          itemBuilder: (context, index) => Container(
+                            height: 50,
+                            alignment: Alignment.center,
+                            child: Text('$pageIndex-$index'),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],

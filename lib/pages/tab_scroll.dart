@@ -9,7 +9,7 @@ class TabScrollPage extends StatefulWidget {
 }
 
 class _TabScrollPageState extends State<TabScrollPage> {
-  final List<String> tabs = <String>['Tab 1', 'Tab 2'];
+  final List<String> tabs = <String>['Tab 1', 'Tab 2', 'Tab 3', 'Tab 4'];
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +17,7 @@ class _TabScrollPageState extends State<TabScrollPage> {
       length: tabs.length, // This is the number of tabs.
       child: Scaffold(
         body: NestedScrollView(
+          floatHeaderSlivers: true,
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             // These are the slivers that show up in the "outer" scroll view.
             return <Widget>[
@@ -49,6 +50,8 @@ class _TabScrollPageState extends State<TabScrollPage> {
                     )
                   ],
                   pinned: true,
+                  //floating: true,
+                  //snap: true,
                   expandedHeight: 150.0,
                   // The "forceElevated" property causes the SliverAppBar to show
                   // a shadow. The "innerBoxIsScrolled" parameter is true when the
@@ -67,12 +70,16 @@ class _TabScrollPageState extends State<TabScrollPage> {
               ),
             ];
           },
-          body: const TabBarView(
-              // These are the contents of the tab views, below the tabs.
-              children: [
-                TabScrollItem(name: 'tab-1'),
-                TabScrollItem(name: 'tab-2'),
-              ]),
+          body: TabBarView(
+            // These are the contents of the tab views, below the tabs.
+            children: List.generate(
+              tabs.length,
+              (index) => TabScrollItem(
+                key: PageStorageKey('tab-$index'),
+                name: 'tab-$index',
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -92,6 +99,9 @@ class _TabScrollItemState extends State<TabScrollItem>
     with AutomaticKeepAliveClientMixin {
   TabController? tabController;
   bool isActive = false;
+
+  final scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -119,10 +129,14 @@ class _TabScrollItemState extends State<TabScrollItem>
       return;
     }
     final render = context.findRenderObject() as RenderBox?;
+    final renderWidth = render?.size.width ?? 1;
     final offset = render?.localToGlobal(Offset.zero);
     setState(() {
-      isActive = offset != null && !offset.dx.isNaN;
+      isActive = offset != null &&
+          !offset.dx.isNaN &&
+          (offset.dx > -renderWidth / 2 && offset.dx < renderWidth / 2);
     });
+    print('${offset?.dx} ${(widget.key as PageStorageKey?)?.value} $isActive');
   }
 
   @override
@@ -133,7 +147,7 @@ class _TabScrollItemState extends State<TabScrollItem>
       bottom: false,
       child: CustomScrollView(
         physics: isActive ? null : const NeverScrollableScrollPhysics(),
-        controller: isActive ? null : ScrollController(),
+        controller: isActive ? null : scrollController,
         // The "controller" and "primary" members should be left
         // unset, so that the NestedScrollView can control this
         // inner scroll view.
