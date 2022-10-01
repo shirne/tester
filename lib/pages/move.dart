@@ -206,7 +206,6 @@ class _MoveTestPageState extends State<MoveTestPage>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                info('M:', '$posM'),
                 info('M: ', '$posM'),
                 info('N: ', '$posN'),
                 info('O: ', '$posO'),
