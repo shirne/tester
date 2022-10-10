@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../fundation/main_channel.dart';
+import '../fundation/method_test.dart';
 
 class LifecycleTest extends StatefulWidget {
   const LifecycleTest({Key? key}) : super(key: key);
@@ -105,6 +107,14 @@ class _LifecycleTestState extends State<LifecycleTest>
                     ]);
                   },
                   child: const Text('Open other page'),
+                ),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    MainChannel.test().then((value) => print(value));
+                    compute(methodTest, '');
+                  },
+                  child: const Text('test'),
                 ),
               ],
             ),

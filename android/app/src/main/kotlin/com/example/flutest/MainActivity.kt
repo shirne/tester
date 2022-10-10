@@ -30,6 +30,8 @@ class MainActivity: FlutterActivity() {
                 val intent = Intent(this@MainActivity, OtherActivity::class.java)
                 intent.putExtra("title",title)
                 startActivity(intent)
+            }else if (methodCall.method == "test") {
+                result.success(9)
             }
         }
     }
