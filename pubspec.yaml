@@ -46,6 +46,8 @@ dependencies:
   screenshot: 1.2.3
   logging: ^1.0.2
   extended_nested_scroll_view:
+  my_plugin:
+    path: plugins/my_plugin
 
 dev_dependencies:
   flutter_test:
