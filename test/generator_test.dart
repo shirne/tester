@@ -6,7 +6,7 @@ void main() {
   test('generator', () {
     final generator = Generator();
 
-    for (CalculationAble c in generator.random(10, 6)) {
+    for (CalculationAble c in generator.random(10, 12)) {
       print('$c = ${c.result}\n');
     }
   });
@@ -25,7 +25,11 @@ class Generator {
     final list = <CalculationAble>[];
 
     for (int i = 0; i < count; i++) {
-      list.add(generate(length, rand.nextInt(100)));
+      var item = generate(length, rand.nextInt(100));
+      while (list.contains(item)) {
+        item = generate(length, rand.nextInt(100));
+      }
+      list.add(item);
     }
     return list;
   }
@@ -66,6 +70,10 @@ class Generator {
         break;
     }
     if (randBox == null) {
+      return generateCalculation(result);
+    }
+    final item = randBox[rand.nextInt(randBox.length)];
+    if (rand.nextDouble() < 0.9 && (item.first == 1 || item.last == 1)) {
       return generateCalculation(result);
     }
 
@@ -129,6 +137,15 @@ class Arithmetic implements CalculationAble {
       }
     }
     return str.toString();
+  }
+
+  @override
+  int get hashCode => first.hashCode ^ oper.hashCode ^ last.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! Arithmetic) return false;
+    return first == other.first && oper == other.oper && last == other.last;
   }
 }
 
@@ -200,6 +217,15 @@ class Calculation implements CalculationAble {
 
   @override
   String toString() => oper == null ? '$first' : '$first ${oper?.symbol} $last';
+
+  @override
+  int get hashCode => first.hashCode ^ oper.hashCode ^ last.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! Calculation) return false;
+    return first == other.first && oper == other.oper && last == other.last;
+  }
 }
 
 Map<int, List<Calculation>> generateAddMap() {
