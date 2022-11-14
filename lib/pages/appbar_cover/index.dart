@@ -2,6 +2,8 @@ import 'package:flutest/pages/appbar_cover/column.dart';
 import 'package:flutest/pages/appbar_cover/cover.dart';
 import 'package:flutter/material.dart';
 
+import 'bottom_cover.dart';
+
 class AppbarCoverPage extends StatefulWidget {
   const AppbarCoverPage({super.key});
 
@@ -18,23 +20,35 @@ class _AppbarCoverPageState extends State<AppbarCoverPage> {
         child: Column(
           children: [
             ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) {
-                      return ColumnPage();
-                    },
-                  ));
-                },
-                child: Text('Column')),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) {
+                    return ColumnPage();
+                  },
+                ));
+              },
+              child: Text('Column'),
+            ),
             ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) {
-                      return CoverPage();
-                    },
-                  ));
-                },
-                child: Text('Cover')),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) {
+                    return CoverPage();
+                  },
+                ));
+              },
+              child: Text('Title Cover'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) {
+                    return BottomCoverPage();
+                  },
+                ));
+              },
+              child: Text('Bottom Cover'),
+            ),
           ],
         ),
       ),

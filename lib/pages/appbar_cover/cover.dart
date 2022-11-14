@@ -87,13 +87,13 @@ class _CoverPageState extends State<CoverPage> {
                     ),
                   ),
                   title: PreferredSize(
-                    preferredSize: Size.fromHeight(kToolbarHeight),
+                    preferredSize: const Size.fromHeight(kToolbarHeight),
                     child: Stack(
                       children: [
                         Container(
                           height: kToolbarHeight,
                           clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: Colors.transparent,
                           ),
                           child: OverflowBox(
@@ -128,7 +128,7 @@ class _CoverPageState extends State<CoverPage> {
                           height: kToolbarHeight,
                           alignment: Alignment.center,
                           child: Row(
-                            children: [
+                            children: const [
                               Expanded(
                                 child: Center(
                                   child: Text('aaa'),
