@@ -4,9 +4,11 @@ import 'pages/anchor.dart';
 import 'pages/anchor2.dart';
 import 'pages/animate_bottom/index.dart';
 import 'pages/animation.dart';
+import 'pages/appbar_cover/index.dart';
 import 'pages/custom_paint.dart';
 import 'pages/custom_scroll.dart';
 import 'pages/custom_scroll_text_field.dart';
+import 'pages/drag_scroll.dart';
 import 'pages/event.dart';
 import 'pages/focus_to_screen.dart';
 import 'pages/gradient_button_page.dart';
@@ -25,6 +27,7 @@ import 'pages/page_listen.dart';
 import 'pages/screen_shot.dart';
 import 'pages/scroll_behavior.dart';
 import 'pages/scroll_page.dart';
+import 'pages/scrollpanel.dart';
 import 'pages/tab_keep_alive/index.dart';
 import 'pages/tab_scroll.dart';
 import 'pages/tab_view.dart';
@@ -277,6 +280,27 @@ class _MenuPageState extends State<MenuPage> {
                       builder: ((context) => const MoveTestPage())));
                 },
                 child: const Text('Move Button'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const ScrollPanelPage())));
+                },
+                child: const Text('Bottom Drag Panel'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const DragScrollPage())));
+                },
+                child: const Text('Drag Scroll Panel'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const AppbarCoverPage())));
+                },
+                child: const Text('Appbar Cover'),
               ),
             ],
           ),
