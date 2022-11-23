@@ -36,13 +36,14 @@ class _DragScrollPageState extends State<DragScrollPage> {
   void _scrolled() {
     if (fillContext?.findRenderObject() == null) return;
 
-    print(fillContext?.size);
+    print((fillContext!.findRenderObject()! as RenderBox).size);
     final height = fillContext?.size?.height ?? 0;
     if (height > 100 && height < maxHeight) {
       heightListener.value = height;
-    } else {
+    }
+    if ((!isFixed && height >= maxHeight) || (isFixed && height < maxHeight)) {
       setState(() {
-        isFixed = true;
+        isFixed = height >= maxHeight;
       });
     }
   }
@@ -67,11 +68,11 @@ class _DragScrollPageState extends State<DragScrollPage> {
             ),
           ),
           SliverFillRemaining(
-            hasScrollBody: !isFixed,
+            hasScrollBody: true, //!isFixed,
             child: ConstrainedBox(
               constraints: isFixed
-                  ? BoxConstraints.tightFor(height: maxHeight)
-                  : BoxConstraints.loose(Size.fromHeight(100)),
+                  ? BoxConstraints.loose(Size.fromHeight(maxHeight))
+                  : BoxConstraints.loose(const Size.fromHeight(100)),
               child: RamainingFill((context) {
                 fillContext = context;
               }),
