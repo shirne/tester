@@ -28,6 +28,7 @@ import 'pages/screen_shot.dart';
 import 'pages/scroll_behavior.dart';
 import 'pages/scroll_page.dart';
 import 'pages/scrollpanel.dart';
+import 'pages/sharingan.dart';
 import 'pages/tab_keep_alive/index.dart';
 import 'pages/tab_scroll.dart';
 import 'pages/tab_view.dart';
@@ -301,6 +302,13 @@ class _MenuPageState extends State<MenuPage> {
                       builder: ((context) => const AppbarCoverPage())));
                 },
                 child: const Text('Appbar Cover'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const SharinganPage())));
+                },
+                child: const Text('Sharingan'),
               ),
             ],
           ),
