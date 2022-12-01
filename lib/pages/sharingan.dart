@@ -9,6 +9,7 @@ class SharinganPage extends StatefulWidget {
 }
 
 class _SharinganPageState extends State<SharinganPage> {
+  double smallRadius = 0.2;
   double innerRadius = 0.2;
   double innerArc = 30;
   double outerRadius = 0.7;
@@ -32,7 +33,10 @@ class _SharinganPageState extends State<SharinganPage> {
           )
         ],
       ),
-      body: Column(
+      body: Flex(
+        direction: MediaQuery.of(context).size.aspectRatio > 1
+            ? Axis.horizontal
+            : Axis.vertical,
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -41,6 +45,7 @@ class _SharinganPageState extends State<SharinganPage> {
               child: CustomPaint(
                 painter: RouondEye(
                   showControl: showControl,
+                  smallRadius: smallRadius,
                   innerRadius: innerRadius,
                   innerArc: innerArc,
                   outerRadius: outerRadius,
@@ -49,89 +54,116 @@ class _SharinganPageState extends State<SharinganPage> {
               ),
             ),
           ),
-          Row(
-            children: [
-              Container(
-                width: 80,
-                alignment: Alignment.centerRight,
-                child: const Text('内圈'),
-              ),
-              Expanded(
-                child: Slider(
-                  min: 0.1,
-                  max: 0.8,
-                  value: innerRadius,
-                  onChanged: (v) {
-                    setState(() {
-                      innerRadius = v;
-                    });
-                  },
+          Expanded(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 80,
+                      alignment: Alignment.centerRight,
+                      child: const Text('内圈'),
+                    ),
+                    Expanded(
+                      child: Slider(
+                        min: 0.1,
+                        max: 0.8,
+                        value: smallRadius,
+                        onChanged: (v) {
+                          setState(() {
+                            smallRadius = v;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Container(
-                width: 80,
-                alignment: Alignment.centerRight,
-                child: const Text('控制点回转'),
-              ),
-              Expanded(
-                child: Slider(
-                  min: 0,
-                  max: 60,
-                  value: innerArc,
-                  onChanged: (v) {
-                    setState(() {
-                      innerArc = v;
-                    });
-                  },
+                Row(
+                  children: [
+                    Container(
+                      width: 80,
+                      alignment: Alignment.centerRight,
+                      child: const Text('内圈控制点'),
+                    ),
+                    Expanded(
+                      child: Slider(
+                        min: 0.1,
+                        max: 0.8,
+                        value: innerRadius,
+                        onChanged: (v) {
+                          setState(() {
+                            innerRadius = v;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Container(
-                width: 80,
-                alignment: Alignment.centerRight,
-                child: const Text('外圈(控制点)'),
-              ),
-              Expanded(
-                child: Slider(
-                  min: 0.1,
-                  max: 1,
-                  value: outerRadius,
-                  onChanged: (v) {
-                    setState(() {
-                      outerRadius = v;
-                    });
-                  },
+                Row(
+                  children: [
+                    Container(
+                      width: 80,
+                      alignment: Alignment.centerRight,
+                      child: const Text('控制点回转'),
+                    ),
+                    Expanded(
+                      child: Slider(
+                        min: 0,
+                        max: 120,
+                        value: innerArc,
+                        onChanged: (v) {
+                          setState(() {
+                            innerArc = v;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Container(
-                width: 80,
-                alignment: Alignment.centerRight,
-                child: const Text('控制点回转'),
-              ),
-              Expanded(
-                child: Slider(
-                  min: 0,
-                  max: 90,
-                  value: outerArc,
-                  onChanged: (v) {
-                    setState(() {
-                      outerArc = v;
-                    });
-                  },
+                Row(
+                  children: [
+                    Container(
+                      width: 80,
+                      alignment: Alignment.centerRight,
+                      child: const Text('外圈控制点'),
+                    ),
+                    Expanded(
+                      child: Slider(
+                        min: 0.1,
+                        max: 1,
+                        value: outerRadius,
+                        onChanged: (v) {
+                          setState(() {
+                            outerRadius = v;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                Row(
+                  children: [
+                    Container(
+                      width: 80,
+                      alignment: Alignment.centerRight,
+                      child: const Text('控制点回转'),
+                    ),
+                    Expanded(
+                      child: Slider(
+                        min: 0,
+                        max: 120,
+                        value: outerArc,
+                        onChanged: (v) {
+                          setState(() {
+                            outerArc = v;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -141,12 +173,15 @@ class _SharinganPageState extends State<SharinganPage> {
 
 class RouondEye extends CustomPainter {
   RouondEye({
-    this.innerRadius = 0.2,
+    this.smallRadius = 0.2,
+    this.innerRadius = 0.4,
     this.innerArc = 30,
     this.outerRadius = 0.7,
     this.outerArc = 30,
     this.showControl = false,
   });
+
+  final double smallRadius;
   final double innerRadius;
   final double innerArc;
   final double outerRadius;
@@ -245,7 +280,7 @@ class RouondEye extends CustomPainter {
     );
     canvas.drawCircle(
       center,
-      sRadius,
+      radius * smallRadius,
       Paint()
         ..color = Colors.orange
         ..style = PaintingStyle.fill,
@@ -270,6 +305,7 @@ class RouondEye extends CustomPainter {
   @override
   bool shouldRepaint(RouondEye oldDelegate) =>
       showControl != oldDelegate.showControl ||
+      smallRadius != oldDelegate.smallRadius ||
       innerRadius != oldDelegate.innerRadius ||
       innerArc != oldDelegate.innerArc ||
       outerRadius != oldDelegate.outerRadius ||
