@@ -1,15 +1,21 @@
 PODS:
   - FlutterMacOS (1.0.0)
+  - my_plugin (0.0.1):
+    - FlutterMacOS
 
 DEPENDENCIES:
   - FlutterMacOS (from `Flutter/ephemeral`)
+  - my_plugin (from `Flutter/ephemeral/.symlinks/plugins/my_plugin/macos`)
 
 EXTERNAL SOURCES:
   FlutterMacOS:
     :path: Flutter/ephemeral
+  my_plugin:
+    :path: Flutter/ephemeral/.symlinks/plugins/my_plugin/macos
 
 SPEC CHECKSUMS:
-  FlutterMacOS: 57701585bf7de1b3fc2bb61f6378d73bbdea8424
+  FlutterMacOS: ae6af50a8ea7d6103d888583d46bd8328a7e9811
+  my_plugin: b60d47f9cfbd50f4f6e694f9c6118a93398e8f54
 
 PODFILE CHECKSUM: 6eac6b3292e5142cfc23bdeb71848a40ec51c14c
 
