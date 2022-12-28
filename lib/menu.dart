@@ -35,6 +35,7 @@ import 'pages/tab_scroll.dart';
 import 'pages/tab_view.dart';
 import 'pages/text_page.dart';
 import 'pages/navpage/index.dart';
+import 'pages/trigonal_prism.dart';
 import 'pages/widget_test.dart';
 import 'pages/date_picker.dart';
 
@@ -314,9 +315,16 @@ class _MenuPageState extends State<MenuPage> {
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: ((context) => ScribbleEyePage())));
+                      builder: ((context) => const ScribbleEyePage())));
                 },
-                child: const Text('Sharingan2'),
+                child: const Text('Sharingan'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const TrigonalPrismPage())));
+                },
+                child: const Text('TrigonalPrism'),
               ),
             ],
           ),
