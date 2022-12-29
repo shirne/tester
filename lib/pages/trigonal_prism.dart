@@ -26,10 +26,10 @@ class TrigonalPrismPage extends StatelessWidget {
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
-              clipBehavior: Clip.antiAliasWithSaveLayer,
+              //clipBehavior: Clip.antiAliasWithSaveLayer,
               child: const Card(
                 color: Colors.amber,
-                // child: TextField(),
+                //child: TextField(),
               ),
             ),
           ),

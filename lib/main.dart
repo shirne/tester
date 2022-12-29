@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'menu.dart';
 import 'tools.dart';
@@ -20,6 +21,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light().copyWith(visualDensity: VisualDensity.standard),
       scrollBehavior: _CustomScrollBehavior(),
       navigatorObservers: [routeObserver],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('zh', 'CN'),
+        Locale('en', 'US'),
+      ],
       home: const MenuPage(),
     );
   }
