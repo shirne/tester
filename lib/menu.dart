@@ -5,6 +5,7 @@ import 'pages/anchor2.dart';
 import 'pages/animate_bottom/index.dart';
 import 'pages/animation.dart';
 import 'pages/appbar_cover/index.dart';
+import 'pages/clip_border.dart';
 import 'pages/custom_paint.dart';
 import 'pages/custom_scroll.dart';
 import 'pages/custom_scroll_text_field.dart';
@@ -325,6 +326,13 @@ class _MenuPageState extends State<MenuPage> {
                       builder: ((context) => const TrigonalPrismPage())));
                 },
                 child: const Text('TrigonalPrism'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const ClipBorderPage())));
+                },
+                child: const Text('ClipBorder'),
               ),
             ],
           ),
