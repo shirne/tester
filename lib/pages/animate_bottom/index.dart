@@ -49,8 +49,10 @@ class _AnimateBottomTestState extends State<AnimateBottomTest> {
                   ),
                   label: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
-                    child:
-                        Text('0', style: Theme.of(context).textTheme.caption),
+                    child: Text(
+                      '0',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                   ),
                 ),
                 TextButton.icon(
@@ -61,8 +63,10 @@ class _AnimateBottomTestState extends State<AnimateBottomTest> {
                   ),
                   label: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
-                    child:
-                        Text('分享', style: Theme.of(context).textTheme.caption),
+                    child: Text(
+                      '分享',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                   ),
                 ),
                 TextButton.icon(
@@ -73,8 +77,10 @@ class _AnimateBottomTestState extends State<AnimateBottomTest> {
                   ),
                   label: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
-                    child:
-                        Text('收藏', style: Theme.of(context).textTheme.caption),
+                    child: Text(
+                      '收藏',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                   ),
                 ),
                 TextButton.icon(
@@ -87,7 +93,7 @@ class _AnimateBottomTestState extends State<AnimateBottomTest> {
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Text(
                       '0',
-                      style: Theme.of(context).textTheme.caption,
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
                 ),

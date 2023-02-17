@@ -68,7 +68,7 @@ class ShotScreenState extends State<ShotScreen> {
                           result != null) {
                         return Image.memory(result);
                       } else {
-                        return Center(
+                        return const Center(
                           child: CircularProgressIndicator(
                             color: Colors.grey,
                           ),
@@ -84,7 +84,7 @@ class ShotScreenState extends State<ShotScreen> {
               onPressed: () {
                 loadTemplateImage(300, 300);
               },
-              child: Text('shot')),
+              child: const Text('shot')),
           if (container != null)
             SizedBox(
               width: 0,

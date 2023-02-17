@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class BottomCoverPage extends StatefulWidget {
@@ -73,7 +71,7 @@ class _BottomCoverPageState extends State<BottomCoverPage> {
                   expandedTitleScale: 1,
                 ),
                 bottom: PreferredSize(
-                  preferredSize: Size.fromHeight(kToolbarHeight),
+                  preferredSize: const Size.fromHeight(kToolbarHeight),
                   child: Stack(
                     children: [
                       Container(

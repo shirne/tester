@@ -21,7 +21,7 @@ class _ListTestPageState extends State<ListTestPage> {
                 lists.clear();
               });
             },
-            style: TextButton.styleFrom(primary: Colors.white),
+            style: TextButton.styleFrom(foregroundColor: Colors.white),
             icon: const Icon(Icons.delete_outline),
             label: const Text('Clear'),
           ),
@@ -31,7 +31,7 @@ class _ListTestPageState extends State<ListTestPage> {
                 lists.add(lists.isEmpty ? 0 : lists.last + 1);
               });
             },
-            style: TextButton.styleFrom(primary: Colors.white),
+            style: TextButton.styleFrom(foregroundColor: Colors.white),
             icon: const Icon(Icons.add),
             label: const Text('Add'),
           ),

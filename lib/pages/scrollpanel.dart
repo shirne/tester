@@ -230,7 +230,7 @@ class _DragContainerState extends State<DragContainer>
         gestures: {MyVerticalDragGestureRecognizer: getRecognizer()},
         child: Stack(
           children: <Widget>[
-            Container(
+            SizedBox(
               child: widget.drawer,
               height: widget.height,
             ),

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class CoverPage extends StatefulWidget {
@@ -80,7 +78,7 @@ class _CoverPageState extends State<CoverPage> {
                           'Cover Title',
                           style: Theme.of(context)
                               .textTheme
-                              .headline6
+                              .titleLarge
                               ?.copyWith(color: Colors.white),
                         ),
                       ),

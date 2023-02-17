@@ -131,8 +131,11 @@ class _ActionTestWidgetState extends State<ActionTestWidget> {
                           builder: (BuildContext context, Widget? child) {
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text('${model.data.value}',
-                                  style: Theme.of(context).textTheme.headline4),
+                              child: Text(
+                                '${model.data.value}',
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium,
+                              ),
                             );
                           }),
                       IconButton(

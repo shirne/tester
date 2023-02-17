@@ -23,31 +23,31 @@ class _AppbarCoverPageState extends State<AppbarCoverPage> {
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) {
-                    return ColumnPage();
+                    return const ColumnPage();
                   },
                 ));
               },
-              child: Text('Column'),
+              child: const Text('Column'),
             ),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) {
-                    return CoverPage();
+                    return const CoverPage();
                   },
                 ));
               },
-              child: Text('Title Cover'),
+              child: const Text('Title Cover'),
             ),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) {
-                    return BottomCoverPage();
+                    return const BottomCoverPage();
                   },
                 ));
               },
-              child: Text('Bottom Cover'),
+              child: const Text('Bottom Cover'),
             ),
           ],
         ),

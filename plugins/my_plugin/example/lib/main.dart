@@ -111,17 +111,17 @@ class _MyAppState extends State<MyApp> {
             Text(path),
             ElevatedButton(
               onPressed: getPath,
-              child: Text('fetchPath'),
+              child: const Text('fetchPath'),
             ),
             Text(subPath),
             ElevatedButton(
               onPressed: getSubPath,
-              child: Text('fetchPath'),
+              child: const Text('fetchPath'),
             ),
             Text('$size'),
             ElevatedButton(
               onPressed: getSize,
-              child: Text('fetchPath'),
+              child: const Text('fetchPath'),
             ),
           ],
         ),

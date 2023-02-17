@@ -47,7 +47,7 @@ class KeyboardObserve extends ChangeNotifier
     }
     final mediaData = MediaQuery.of(state.context);
     if (mediaData.viewInsets.bottom != _value) {
-      print('${mediaData.viewInsets.bottom} - ${_value}');
+      print('${mediaData.viewInsets.bottom} - $_value');
       _value = mediaData.viewInsets.bottom;
       if (_value > 0) {
         _storeValue = _value;

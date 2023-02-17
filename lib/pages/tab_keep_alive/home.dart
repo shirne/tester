@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Center(
       child: Text('Index page has keep alive ${isLoaded ? '已加载' : '加载中'}'),
     );

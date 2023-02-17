@@ -163,7 +163,7 @@ class _RamainingFillState extends State<RamainingFill> {
     return Container(
       color: Colors.amber[50],
       alignment: Alignment.center,
-      child: Text('A'),
+      child: const Text('A'),
     );
   }
 }

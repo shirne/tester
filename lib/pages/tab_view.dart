@@ -53,19 +53,19 @@ class _TabViewPageState extends State<TabViewPage>
           Center(
             child: Text(
               'Zeroth Tab',
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
           Center(
             child: Text(
               'First Tab',
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
           Center(
             child: Text(
               'Second Tab',
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
           )
         ],
