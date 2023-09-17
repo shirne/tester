@@ -249,7 +249,6 @@ class _ObjectPainter extends CustomPainter {
   }
 
   void _drawFace(List<Vector3> verticesToDraw, List<int> face, Canvas canvas) {
-    //List<dynamic> list = [];
     Paint paint = Paint();
     Vector3 normalizedLight = Vector3.copy(light).normalized();
 
@@ -300,17 +299,13 @@ class _ObjectPainter extends CustomPainter {
 
       path.lineTo(secondVertexX, secondVertexY);
     }
-    var z = 0.0;
-    for (var x in face) {
-      z += verticesToDraw[x - 1].z;
-    }
+    // var z = 0.0;
+    // for (var x in face) {
+    //   z += verticesToDraw[x - 1].z;
+    // }
 
     path.close();
-    //print("draw $path  $paint");
     canvas.drawPath(path, paint);
-    //list.add(path);
-    //list.add(paint);
-    //return list;
   }
 
   @override
@@ -347,20 +342,15 @@ class _ObjectPainter extends CustomPainter {
       List<int> face = faces[avgOfZ[i]["index"]];
       if (_shouldDrawFace(face) || true) {
         _drawFace(verticesToDraw, face, canvas);
-        //final List<dynamic> faceProp =
-        //canvas.drawPath(faceProp[0], faceProp[1]);
       }
     }
   }
 
   @override
-  bool shouldRepaint(_ObjectPainter old) {
-    bool sr = old.object != object ||
-        old.angleX != angleX ||
-        old.angleY != angleY ||
-        old.angleZ != angleZ ||
-        old._zoomFactor != _zoomFactor;
-    //print('shouldRepaint: $sr');
-    return sr;
-  }
+  bool shouldRepaint(_ObjectPainter old) =>
+      old.object != object ||
+      old.angleX != angleX ||
+      old.angleY != angleY ||
+      old.angleZ != angleZ ||
+      old._zoomFactor != _zoomFactor;
 }

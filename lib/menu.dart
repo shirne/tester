@@ -4,6 +4,7 @@ import 'main.dart';
 import 'pages/anchor.dart';
 import 'pages/anchor2.dart';
 import 'pages/animate_bottom/index.dart';
+import 'pages/animate_bottombar.dart';
 import 'pages/animation.dart';
 import 'pages/appbar_cover/index.dart';
 import 'pages/clip_border.dart';
@@ -358,6 +359,13 @@ class _MenuPageState extends State<MenuPage> {
                       builder: ((context) => const CustomBorderPage())));
                 },
                 child: const Text('CustomBorder'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const AnimateBottomBarPage())));
+                },
+                child: const Text('Animated Bottombar'),
               ),
               Text(
                 'Hello, World!',
