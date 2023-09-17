@@ -11,14 +11,30 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => MyAppState();
+}
+
+class MyAppState extends State<MyApp> {
+  ThemeMode themeMode = ThemeMode.light;
+
+  void setTheme(ThemeMode mode) {
+    setState(() {
+      themeMode = mode;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      themeMode: themeMode,
       theme: ThemeData.light().copyWith(visualDensity: VisualDensity.standard),
+      darkTheme:
+          ThemeData.dark().copyWith(visualDensity: VisualDensity.standard),
       scrollBehavior: _CustomScrollBehavior(),
       navigatorObservers: [routeObserver],
       localizationsDelegates: const [

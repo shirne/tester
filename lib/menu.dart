@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
+import 'main.dart';
 import 'pages/anchor.dart';
 import 'pages/anchor2.dart';
 import 'pages/animate_bottom/index.dart';
 import 'pages/animation.dart';
 import 'pages/appbar_cover/index.dart';
 import 'pages/clip_border.dart';
+import 'pages/custom_border.dart';
 import 'pages/custom_paint.dart';
 import 'pages/custom_scroll.dart';
 import 'pages/custom_scroll_text_field.dart';
@@ -49,10 +51,26 @@ class MenuPage extends StatefulWidget {
 
 class _MenuPageState extends State<MenuPage> {
   Size? size;
+  late bool isDark = Theme.of(context).brightness == Brightness.dark;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('演示列表')),
+      appBar: AppBar(
+        title: const Text('演示列表'),
+        actions: [
+          Switch(
+              value: isDark,
+              onChanged: (bool newValue) {
+                isDark = newValue;
+                setState(() {});
+                final appState = context.findAncestorStateOfType<MyAppState>();
+                if (appState != null) {
+                  appState.setTheme(isDark ? ThemeMode.dark : ThemeMode.light);
+                }
+              }),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -333,6 +351,25 @@ class _MenuPageState extends State<MenuPage> {
                       builder: ((context) => const ClipBorderPage())));
                 },
                 child: const Text('ClipBorder'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const CustomBorderPage())));
+                },
+                child: const Text('CustomBorder'),
+              ),
+              Text(
+                'Hello, World!',
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    foreground: Paint()
+                      ..shader = const LinearGradient(
+                        colors: [Colors.blue, Colors.red],
+                      ).createShader(
+                        const Rect.fromLTWH(0, 0, 100, 100),
+                      )
+                    //..blendMode = BlendMode.dstIn,
+                    ),
               ),
             ],
           ),
