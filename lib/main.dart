@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shirne_dialog/shirne_dialog.dart';
 
 import 'menu.dart';
 import 'tools.dart';
@@ -31,6 +32,7 @@ class MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      navigatorKey: MyDialog.navigatorKey,
       themeMode: themeMode,
       theme: ThemeData.light().copyWith(visualDensity: VisualDensity.standard),
       darkTheme:
@@ -38,6 +40,7 @@ class MyAppState extends State<MyApp> {
       scrollBehavior: _CustomScrollBehavior(),
       navigatorObservers: [routeObserver],
       localizationsDelegates: const [
+        ShirneDialogLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,

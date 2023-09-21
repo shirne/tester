@@ -16,6 +16,7 @@ import 'pages/drag_scroll.dart';
 import 'pages/event.dart';
 import 'pages/focus_to_screen.dart';
 import 'pages/gradient_button_page.dart';
+import 'pages/hit_test.dart';
 import 'pages/image_filter.dart';
 import 'pages/isolate.dart';
 import 'pages/lifecycle.dart';
@@ -366,6 +367,13 @@ class _MenuPageState extends State<MenuPage> {
                       builder: ((context) => const AnimateBottomBarPage())));
                 },
                 child: const Text('Animated Bottombar'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const HitTestPage())));
+                },
+                child: const Text('HitTest'),
               ),
               Text(
                 'Hello, World!',
