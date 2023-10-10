@@ -79,10 +79,10 @@ class _ColumnPageState extends State<ColumnPage> {
                     title: const Text('app Bar'),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: kToolbarHeight,
                   child: Row(
-                    children: const [
+                    children: [
                       Expanded(
                         child: Center(
                           child: Text('aaa'),

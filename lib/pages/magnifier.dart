@@ -23,8 +23,8 @@ class MagnifierPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Row(
-                children: const [
+              const Row(
+                children: [
                   Text('topleft'),
                   Spacer(),
                   Text('topright'),
@@ -54,8 +54,8 @@ class MagnifierPage extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Row(
-                children: const [
+              const Row(
+                children: [
                   Text('bottomleft'),
                   Spacer(),
                   Text('bottomright'),

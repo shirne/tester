@@ -12,10 +12,10 @@ class LoadingIndex extends StatefulWidget {
 class _LoadingIndexState extends State<LoadingIndex> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: SafeArea(
         child: Column(
-          children: const [
+          children: [
             Center(
               child: CircularProgressIndicator(),
             ),

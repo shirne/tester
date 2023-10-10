@@ -10,7 +10,6 @@ class HitTestPage extends StatefulWidget {
 
 class _HitTestPageState extends State<HitTestPage> {
   final pressedRect = ValueNotifier<Rect?>(null);
-  final bottomHalfKey = GlobalKey();
 
   void showCover(BuildContext context) {
     if (pressedRect.value != null) return;
@@ -118,7 +117,7 @@ class _HitTestPageState extends State<HitTestPage> {
                             knockRect: Rect.fromCenter(
                                 center: Offset(
                                   constraints.maxWidth / 2,
-                                  constraints.maxHeight / 2,
+                                  (constraints.maxHeight + kToolbarHeight) / 2,
                                 ),
                                 width: 200,
                                 height: 200),
@@ -132,7 +131,6 @@ class _HitTestPageState extends State<HitTestPage> {
             }),
           ),
           Expanded(
-            key: bottomHalfKey,
             child: Stack(
               children: [
                 Positioned.fill(
@@ -220,7 +218,7 @@ class KnockShape extends ShapeBorder {
 
   @override
   void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
-    final path = getOuterPath(rect);
+    //final path = getOuterPath(rect);
     //canvas.drawPath(path, Paint()..color=)
   }
 

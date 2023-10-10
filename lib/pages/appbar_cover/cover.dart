@@ -125,8 +125,8 @@ class _CoverPageState extends State<CoverPage> {
                         Container(
                           height: kToolbarHeight,
                           alignment: Alignment.center,
-                          child: Row(
-                            children: const [
+                          child: const Row(
+                            children: [
                               Expanded(
                                 child: Center(
                                   child: Text('aaa'),

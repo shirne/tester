@@ -111,8 +111,8 @@ class _BottomCoverPageState extends State<BottomCoverPage> {
                       Container(
                         height: kToolbarHeight,
                         alignment: Alignment.center,
-                        child: Row(
-                          children: const [
+                        child: const Row(
+                          children: [
                             Expanded(
                               child: Center(
                                 child: Text('aaa'),
