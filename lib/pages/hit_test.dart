@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:shirne_dialog/shirne_dialog.dart';
 
@@ -15,12 +13,66 @@ class _HitTestPageState extends State<HitTestPage> {
   final bottomHalfKey = GlobalKey();
 
   void showCover(BuildContext context) {
+    if (pressedRect.value != null) return;
+
     final obj = context.findRenderObject() as RenderBox?;
     if (obj == null) return;
     final size = obj.size;
     final offset = obj.localToGlobal(Offset.zero);
 
     pressedRect.value = offset & size;
+  }
+
+  Widget _topHalfButton(int num) {
+    return ElevatedButton(
+      onPressed: () {
+        MyDialog.toast('button$num pressed');
+      },
+      child: Text('button$num'),
+    );
+  }
+
+  Widget _bottomHalfButton(int num) {
+    return Builder(builder: (context) {
+      return GestureDetector(
+        onTapDown: (details) {
+          print('onTapDown $details');
+        },
+        onTapUp: (details) {
+          print('onTapUp $details');
+          pressedRect.value = null;
+        },
+        onPanDown: (details) {
+          print('onPanDown $details');
+          showCover(context);
+        },
+        onPanStart: (details) {
+          print('onPanStart $details');
+        },
+        onPanUpdate: (details) {
+          print('onPanUpdate $details');
+        },
+        onPanEnd: (details) {
+          print('onPanEnd $details');
+          pressedRect.value = null;
+        },
+        onPanCancel: () {
+          print('onPanCancel');
+          pressedRect.value = null;
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Text(
+            'button$num',
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
+      );
+    });
   }
 
   @override
@@ -42,32 +94,10 @@ class _HitTestPageState extends State<HitTestPage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              MyDialog.toast('button1 pressed');
-                            },
-                            child: const Text('button1'),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              MyDialog.toast('button2 pressed');
-                            },
-                            child: const Text('button2'),
-                          ),
-                          Builder(builder: (context) {
-                            return ElevatedButton(
-                              onPressed: () {
-                                MyDialog.toast('button3 pressed');
-                              },
-                              child: const Text('button3'),
-                            );
-                          }),
-                          ElevatedButton(
-                            onPressed: () {
-                              MyDialog.toast('button4 pressed');
-                            },
-                            child: const Text('button4'),
-                          ),
+                          _topHalfButton(1),
+                          _topHalfButton(2),
+                          _topHalfButton(3),
+                          _topHalfButton(4),
                         ],
                       ),
                     ),
@@ -112,94 +142,11 @@ class _HitTestPageState extends State<HitTestPage> {
                       spacing: 8,
                       runSpacing: 8,
                       children: [
-                        Builder(builder: (context) {
-                          return GestureDetector(
-                            onTapDown: (details) {
-                              showCover(context);
-                            },
-                            onTapUp: (details) {
-                              pressedRect.value = null;
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 16),
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: const Text(
-                                'button',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          );
-                        }),
-                        Builder(builder: (context) {
-                          return GestureDetector(
-                            onTapDown: (details) {
-                              showCover(context);
-                            },
-                            onTapUp: (details) {
-                              pressedRect.value = null;
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 16),
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: const Text(
-                                'button',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          );
-                        }),
-                        Builder(builder: (context) {
-                          return GestureDetector(
-                            onTapDown: (details) {
-                              showCover(context);
-                            },
-                            onTapUp: (details) {
-                              pressedRect.value = null;
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 16),
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: const Text(
-                                'button',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          );
-                        }),
-                        Builder(builder: (context) {
-                          return GestureDetector(
-                            onTapDown: (details) {
-                              showCover(context);
-                            },
-                            onTapUp: (details) {
-                              pressedRect.value = null;
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 16),
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: const Text(
-                                'button',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          );
-                        }),
+                        _bottomHalfButton(1),
+                        _bottomHalfButton(2),
+                        _bottomHalfButton(3),
+                        _bottomHalfButton(4),
+                        _bottomHalfButton(5),
                       ],
                     ),
                   ),
