@@ -9,6 +9,36 @@ import 'package:flutter_test/flutter_test.dart';
 main() {
   setUp(() async {});
 
+  Future<Uint8List> getData(String path) async {
+    final ui.Codec codec =
+        await ui.instantiateImageCodec(File(path).readAsBytesSync());
+
+    final image = (await codec.getNextFrame()).image;
+
+    final data = await image.toByteData(format: ui.ImageByteFormat.rawRgba);
+    return data!.buffer.asUint8List();
+  }
+
+  test('compare color', () async {
+    final orig = '${Directory.current.path}/assets/images/rect2.jpg';
+    final p1 = '${Directory.current.path}/newimage.png';
+    final p2 = '${Directory.current.path}/rect2.png';
+    final data = await getData(orig);
+    final data1 = await getData(p1);
+    final data2 = await getData(p2);
+
+    final pos = 150 * 300 * 4 + 270 * 4;
+
+    print(data.sublist(pos, pos + 4));
+    print(data1.sublist(pos, pos + 4));
+    print(data2.sublist(pos, pos + 4));
+
+    final pos2 = 150 * 300 * 4 + 150 * 4;
+    print(data.sublist(pos2, pos2 + 4));
+    print(data1.sublist(pos2, pos2 + 4));
+    print(data2.sublist(pos2, pos2 + 4));
+  });
+
   test('gif image', () async {
     const dir = r'path/to/gif/dir';
     final bytes = File('$dir\\img-4.gif').readAsBytesSync();
