@@ -55,16 +55,21 @@ class _CutImagePageState extends State<CutImagePage> {
     );
 
     // 画背景色
-    canvas.drawRect(
-      fullRect,
-      Paint()
-        ..color = Colors.purple
-        ..style = PaintingStyle.fill,
-    );
+    // canvas.drawRect(
+    //   fullRect,
+    //   Paint()
+    //     ..color = Colors.purple
+    //     ..style = PaintingStyle.fill,
+    // );
+    final bgColor = Colors.purple;
 
-    final pixels =
+    final byteData =
         (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!;
-    final unit8List = pixels.buffer.asUint8List();
+    final pixels = byteData.buffer.asUint32List();
+
+    // 取一行原始数据
+    // addLog(
+    //     '原始数据：${pixels.skip(150 * 300 * 4).take(300 * 4).map<String>((e) => e.toRadixString(16).padLeft(2, '0')).join(' ')}');
 
     // 需要处理的边缘像素数
     double side = 50; //image.width / 6;
@@ -76,14 +81,21 @@ class _CutImagePageState extends State<CutImagePage> {
       final alpha = i * 255 ~/ side;
 
       for (int w = 0; w <= maxWidth; w++) {
-        final topIndex = i * image.width * 4 + w * 4 + 3;
-        final bottomIndex = (maxHeight - i) * image.width * 4 + w * 4 + 3;
-        addLog(
-            '上边缘像素：$w, $i, ${unit8List.sublist(topIndex - 3, topIndex + 1)}, $alpha');
-        addLog(
-            '下边缘像素：$w, ${maxHeight - i}, ${unit8List.sublist(bottomIndex - 3, bottomIndex + 1)}, $alpha');
-        unit8List[topIndex] = alpha;
-        unit8List[bottomIndex] = alpha;
+        final topIndex = i * image.width + w;
+        final bottomIndex = (maxHeight - i) * image.width + w;
+        final topColor = Color(pixels[topIndex]);
+        final bottomColor = Color(pixels[topIndex]);
+
+        // 四角颜色等下再混合
+        if (w <= side || w >= maxWidth - side) {
+          pixels[topIndex] = topColor.withAlpha(alpha).value;
+          pixels[bottomIndex] = bottomColor.withAlpha(alpha).value;
+        } else {
+          pixels[topIndex] =
+              Color.alphaBlend(topColor.withAlpha(alpha), bgColor).value;
+          pixels[bottomIndex] =
+              Color.alphaBlend(bottomColor.withAlpha(alpha), bgColor).value;
+        }
       }
     }
 
@@ -91,28 +103,34 @@ class _CutImagePageState extends State<CutImagePage> {
     for (int i = 0; i < side; i++) {
       final alpha = i * 255 ~/ side;
       for (int h = 0; h <= maxHeight; h++) {
-        final leftIndex = h * image.width * 4 + i * 4 + 3;
-        final rightIndex = h * image.width * 4 + (maxWidth - i) * 4 + 3;
-        addLog(
-            '左边缘像素：$i, $h, ${unit8List.sublist(leftIndex - 3, leftIndex + 1)}, $alpha');
-        addLog(
-            '右边缘像素：${maxWidth - i}, $h, ${unit8List.sublist(rightIndex - 3, rightIndex + 1)}, $alpha');
+        final leftIndex = h * image.width + i;
+        final rightIndex = h * image.width + (maxWidth - i);
+        final leftColor = Color(pixels[leftIndex]);
+        final rightColor = Color(pixels[rightIndex]);
         // 四角交界的地方
         if (h <= side || h >= maxHeight - side) {
-          unit8List[leftIndex] = math.min(alpha, unit8List[leftIndex]);
-          unit8List[rightIndex] = math.min(alpha, unit8List[rightIndex]);
+          final leftAlpha = math.min(alpha, leftColor.alpha);
+          final rightAlpha = math.min(alpha, rightColor.alpha);
+          pixels[leftIndex] =
+              Color.alphaBlend(leftColor.withAlpha(leftAlpha), bgColor).value;
+          pixels[rightIndex] =
+              Color.alphaBlend(rightColor.withAlpha(rightAlpha), bgColor).value;
         } else {
-          unit8List[leftIndex] = alpha;
-          unit8List[rightIndex] = alpha;
+          pixels[leftIndex] =
+              Color.alphaBlend(leftColor.withAlpha(alpha), bgColor).value;
+          pixels[rightIndex] =
+              Color.alphaBlend(rightColor.withAlpha(alpha), bgColor).value;
         }
       }
     }
 
-    //addLog('最终数据：${unit8List.join(' ')}');
+    // 取一行处理后的数据
+    // addLog(
+    //     '最终数据：${pixels.skip(150 * 300 * 4).take(300 * 4).map<String>((e) => e.toRadixString(16).padLeft(2, '0')).join(' ')}');
 
     final alphaedImage = Completer<ui.Image>();
     ui.decodeImageFromPixels(
-      unit8List,
+      pixels.buffer.asUint8List(),
       image.width,
       image.height,
       ui.PixelFormat.rgba8888,
@@ -134,13 +152,21 @@ class _CutImagePageState extends State<CutImagePage> {
     imageProvider = MemoryImage(newImageByte!.buffer.asUint8List());
     setState(() {});
 
+    // 取一行解析后的数据
+    // final newPixels =
+    //     (await newImage.toByteData(format: ui.ImageByteFormat.rawRgba))!
+    //         .buffer
+    //         .asUint8List();
+    // addLog(
+    //     '最终数据：${newPixels.skip(150 * 300 * 4).take(300 * 4).map<String>((e) => e.toRadixString(16).padLeft(2, '0')).join(' ')}');
+
     // 图片写到文件
     // File('${Directory.current.path}/newimage.png')
     //     .writeAsBytes(newImageByte.buffer.asUint8List());
 
     // 日志写到文件
-    // File('${Directory.current.path}/log.txt')
-    //     .writeAsStringSync(logTexts.join('\n'));
+    File('${Directory.current.path}/log.txt')
+        .writeAsStringSync(logTexts.join('\n'));
   }
 
   @override
@@ -151,7 +177,7 @@ class _CutImagePageState extends State<CutImagePage> {
       ),
       body: Container(
         alignment: Alignment.center,
-        color: Colors.limeAccent,
+        color: Colors.blueAccent[100],
         child: Column(
           children: [
             const Text('原图'),
