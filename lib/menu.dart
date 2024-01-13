@@ -12,6 +12,7 @@ import 'pages/custom_border.dart';
 import 'pages/custom_paint.dart';
 import 'pages/custom_scroll.dart';
 import 'pages/custom_scroll_text_field.dart';
+import 'pages/cut_image.dart';
 import 'pages/drag_scroll.dart';
 import 'pages/event.dart';
 import 'pages/focus_to_screen.dart';
@@ -374,6 +375,13 @@ class _MenuPageState extends State<MenuPage> {
                       builder: ((context) => const HitTestPage())));
                 },
                 child: const Text('HitTest'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const CutImagePage())));
+                },
+                child: const Text('cut image'),
               ),
               Text(
                 'Hello, World!',
