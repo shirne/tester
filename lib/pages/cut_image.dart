@@ -84,7 +84,7 @@ class _CutImagePageState extends State<CutImagePage> {
         final topIndex = i * image.width + w;
         final bottomIndex = (maxHeight - i) * image.width + w;
         final topColor = Color(pixels[topIndex]);
-        final bottomColor = Color(pixels[topIndex]);
+        final bottomColor = Color(pixels[bottomIndex]);
 
         // 四角颜色等下再混合
         if (w <= side || w >= maxWidth - side) {
