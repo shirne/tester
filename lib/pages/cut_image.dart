@@ -133,7 +133,7 @@ class _CutImagePageState extends State<CutImagePage> {
       pixels.buffer.asUint8List(),
       image.width,
       image.height,
-      ui.PixelFormat.rgba8888,
+      ui.PixelFormat.bgra8888,
       (result) {
         alphaedImage.complete(result);
       },
