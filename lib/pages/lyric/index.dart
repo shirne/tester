@@ -56,7 +56,7 @@ class _LyricPageState extends State<LyricPage> {
     super.dispose();
   }
 
-  _startPlay() {
+  void _startPlay() {
     if (isStart) {
       setState(() {
         timer!.cancel();
@@ -72,7 +72,7 @@ class _LyricPageState extends State<LyricPage> {
     }
   }
 
-  _onTimer(Timer timer) {
+  void _onTimer(Timer timer) {
     setState(() {
       passedTime =
           DateTime.now().millisecondsSinceEpoch - start!.millisecondsSinceEpoch;
@@ -91,16 +91,14 @@ class _LyricPageState extends State<LyricPage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lyric'),
         actions: [
           TextButton(
             onPressed: _startPlay,
-            child: Text(
-              isStart ? '停止' : '开始',
-              style: const TextStyle(color: Colors.white),
-            ),
+            child: Text(isStart ? '停止' : '开始'),
           )
         ],
       ),
@@ -132,10 +130,16 @@ class _LyricPageState extends State<LyricPage> {
                       });
                     }
                     return Center(
-                      child: Text(
-                        lyrics[index].value,
-                        style: TextStyle(
-                          color: isActive ? Colors.amber : Colors.black87,
+                      child: AnimatedScale(
+                        scale: isActive ? 1.3 : 1,
+                        duration: const Duration(milliseconds: 300),
+                        child: Text(
+                          lyrics[index].value,
+                          style: TextStyle(
+                            color: isActive
+                                ? Colors.amber
+                                : colorScheme.onBackground,
+                          ),
                         ),
                       ),
                     );

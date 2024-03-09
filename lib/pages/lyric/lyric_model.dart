@@ -175,7 +175,7 @@ class LyricTag {
       }
     }
     if (parts.length > 1) {
-      result += ((double.tryParse("0.parts[1]") ?? 0) * 1000).toInt();
+      result += ((double.tryParse("0.${parts[1]}") ?? 0) * 1000).toInt();
     }
     return result;
   }
