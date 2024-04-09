@@ -39,7 +39,7 @@ class _LifecycleTestState extends State<LifecycleTest>
         break;
       case AppLifecycleState.detached: // 申请将暂时暂停
         break;
-      case AppLifecycleState.hidden:
+        //case AppLifecycleState.hidden:
         // TODO: Handle this case.
         break;
     }

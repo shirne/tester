@@ -1,3 +1,4 @@
+import 'package:flutest/pages/card.dart';
 import 'package:flutter/material.dart';
 
 import 'main.dart';
@@ -382,6 +383,13 @@ class _MenuPageState extends State<MenuPage> {
                       builder: ((context) => const CutImagePage())));
                 },
                 child: const Text('cut image'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const CardPage(title: 'Card'))));
+                },
+                child: const Text('card'),
               ),
               Text(
                 'Hello, World!',
