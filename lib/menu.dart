@@ -1,4 +1,5 @@
 import 'package:flutest/pages/card.dart';
+import 'package:flutest/pages/word2_color.dart';
 import 'package:flutter/material.dart';
 
 import 'main.dart';
@@ -390,6 +391,14 @@ class _MenuPageState extends State<MenuPage> {
                       builder: ((context) => const CardPage(title: 'Card'))));
                 },
                 child: const Text('card'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) =>
+                          const Word2ColorPage(title: 'Word to Color'))));
+                },
+                child: const Text('Word to Color'),
               ),
               Text(
                 'Hello, World!',
