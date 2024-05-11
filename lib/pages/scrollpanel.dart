@@ -13,6 +13,7 @@ class _ScrollPanelPageState extends State<ScrollPanelPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       extendBody: true,
       extendBodyBehindAppBar: true,
       body: BottomDragWidget(

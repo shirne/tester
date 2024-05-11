@@ -47,6 +47,7 @@ class ShotScreenState extends State<ShotScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Shot Screen')),
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
