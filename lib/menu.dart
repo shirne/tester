@@ -9,6 +9,7 @@ import 'pages/animate_bottom/index.dart';
 import 'pages/animate_bottombar.dart';
 import 'pages/animation.dart';
 import 'pages/appbar_cover/index.dart';
+import 'pages/bottom_expand.dart';
 import 'pages/clip_border.dart';
 import 'pages/custom_border.dart';
 import 'pages/custom_paint.dart';
@@ -399,6 +400,13 @@ class _MenuPageState extends State<MenuPage> {
                           const Word2ColorPage(title: 'Word to Color'))));
                 },
                 child: const Text('Word to Color'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const BottomExpandPage())));
+                },
+                child: const Text('Bottom Expand'),
               ),
               Text(
                 'Hello, World!',
