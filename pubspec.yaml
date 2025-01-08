@@ -1,7 +1,7 @@
 name: flutest
 description: A new Flutter project.
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
@@ -18,21 +18,21 @@ dependencies:
   flutter_native_splash: ^2.2.19
   ffi:
   dio: ^5.1.2
-  http: ^0.13.6
+  http: ^1.2.2
   intl:
   vector_math: ^2.1.0
   shirne_dialog:
   event_bus: ^2.0.0
   image:
-  zxing_lib: 
-  screenshot: ^2.0.0
+  zxing_lib:
+  screenshot: ^3.0.0
   logging: ^1.0.2
   extended_nested_scroll_view:
   imageview360:
   #panorama:
-  flutter_svg: ^2.0.7
+  flutter_svg: ^2.0.16
   my_plugin:
-   path: plugins/my_plugin
+    path: plugins/my_plugin
 
 dev_dependencies:
   flutter_test:
@@ -41,7 +41,6 @@ dev_dependencies:
   flutter_lints:
 
 flutter:
-
   uses-material-design: true
 
   assets:

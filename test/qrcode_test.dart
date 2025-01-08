@@ -50,9 +50,10 @@ bool readImage(Image img, String flag) {
         img.width, img.height, img.getBytes().buffer.asInt32List());
     final bin = GlobalHistogramBinarizer(luminance);
 
-    final result = decoder.decode(BinaryBitmap(bin), {
-      DecodeHintType.TRY_HARDER: true,
-    });
+    final result = decoder.decode(
+      BinaryBitmap(bin),
+      DecodeHint(tryHarder: true),
+    );
     stdout.writeln(' success[$flag]:  ${result.text}');
     return true;
   } catch (_) {
