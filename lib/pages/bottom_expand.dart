@@ -151,6 +151,8 @@ class _BottomExpandPageState extends State<BottomExpandPage> {
               },
               child: CustomScrollView(
                 controller: controller2,
+                physics:
+                    isExpanded.value ? null : NeverScrollableScrollPhysics(),
                 slivers: [
                   // 空白占位
                   SliverToBoxAdapter(
@@ -162,8 +164,7 @@ class _BottomExpandPageState extends State<BottomExpandPage> {
                           tween:
                               Tween(end: isExpanded.value ? lastOffHeight : 0),
                           builder: (context, value, child) {
-                            return SizedBox(
-                                height: isExpanded.value ? lastOffHeight : 0);
+                            return SizedBox(height: value);
                           },
                           child: child,
                         );
