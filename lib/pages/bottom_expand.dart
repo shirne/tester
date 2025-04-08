@@ -8,8 +8,8 @@ class BottomExpandPage extends StatefulWidget {
 }
 
 class _BottomExpandPageState extends State<BottomExpandPage> {
-  var isExpanded = ValueNotifier(false);
-  var height = ValueNotifier(0.0);
+  var isExpanded = ValueNotifier(true);
+  var height = ValueNotifier(1080.0);
   final int list1ItemCount = 100;
   final int list2ItemCount = 100;
   var handerKey = GlobalKey();
@@ -17,7 +17,7 @@ class _BottomExpandPageState extends State<BottomExpandPage> {
   final controller2 = ScrollController();
 
   // 记录上次的偏移位置，防止目标对象滑出视野dispose
-  double? lastOffHeight;
+  double? lastOffHeight = 360;
 
   var bindScrollOffset = ValueNotifier(0.0);
 
@@ -38,6 +38,7 @@ class _BottomExpandPageState extends State<BottomExpandPage> {
             renderObj.localToGlobal(Offset(0, renderObj.size.height)).dy;
         lastOffHeight = offset + controller.offset + 8;
       }
+      height.value = MediaQuery.of(context).size.height;
     });
   }
 
