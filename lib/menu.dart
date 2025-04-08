@@ -33,6 +33,7 @@ import 'pages/move.dart';
 import 'pages/object_page.dart';
 import 'pages/image_test.dart';
 import 'pages/page_listen.dart';
+import 'pages/player_button.dart';
 import 'pages/screen_shot.dart';
 import 'pages/scroll_behavior.dart';
 import 'pages/scroll_page.dart';
@@ -407,6 +408,13 @@ class _MenuPageState extends State<MenuPage> {
                       builder: ((context) => const BottomExpandPage())));
                 },
                 child: const Text('Bottom Expand'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const PlayerButtonPage())));
+                },
+                child: const Text('Player Button'),
               ),
               Text(
                 'Hello, World!',
