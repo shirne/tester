@@ -58,8 +58,9 @@ class _CirclePlayerButtonState extends State<CirclePlayerButton> {
     if (rectBox != null) {
       var rect = rectBox.size;
       pressedPosition.value = Alignment(
-          (localPos.dx * 2 / rect.width - 1).clamp(-1, 1),
-          (localPos.dy * 2 / rect.height - 1).clamp(-1, 1));
+        (localPos.dx * 2 / rect.width - 1).clamp(-1, 1),
+        (localPos.dy * 2 / rect.height - 1).clamp(-1, 1),
+      );
     }
   }
 
@@ -93,7 +94,7 @@ class _CirclePlayerButtonState extends State<CirclePlayerButton> {
                 decoration: BoxDecoration(
                   //color: Color(0xFFECEDEF),
                   gradient: RadialGradient(
-                    colors: [Color(0xFFFFFFFF), Color(0xFFDDDDDD)],
+                    colors: [Color(0xFFCCCCCC), Color(0xFFEEEEEE)],
                     //colors: [Color(0xFFEEEEEE), Color(0xFFDDDDDD)],
 
                     focal: value,
