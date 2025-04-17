@@ -19,6 +19,26 @@ main() {
     return data!.buffer.asUint8List();
   }
 
+  test('read image color', () async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    var image = File('../bg.png');
+    var loadedFuture = Completer<ui.Image>();
+    ui.decodeImageFromList(image.readAsBytesSync(), (loadImage) {
+      loadedFuture.complete(loadImage);
+    });
+    var loadImage = await loadedFuture.future;
+    print("${loadImage.width}/${loadImage.height}");
+    var pixels = await loadImage.toByteData(format: ui.ImageByteFormat.rawRgba);
+    if (pixels != null) {
+      var data = pixels.buffer.asUint8List();
+      print(data.length);
+
+      var idx = ((loadImage.width * loadImage.height / 2) + loadImage.width / 2)
+          .toInt();
+      print(data.sublist(idx, idx + 4));
+    }
+  });
+
   test('compare color', () async {
     final orig = '${Directory.current.path}/assets/images/rect2.jpg';
     final p1 = '${Directory.current.path}/newimage.png';
