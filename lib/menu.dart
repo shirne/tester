@@ -1,5 +1,3 @@
-import 'package:flutest/pages/card.dart';
-import 'package:flutest/pages/word2_color.dart';
 import 'package:flutter/material.dart';
 
 import 'main.dart';
@@ -10,7 +8,9 @@ import 'pages/animate_bottombar.dart';
 import 'pages/animation.dart';
 import 'pages/appbar_cover/index.dart';
 import 'pages/bottom_expand.dart';
+import 'pages/card.dart';
 import 'pages/clip_border.dart';
+import 'pages/color_scheme.dart';
 import 'pages/custom_border.dart';
 import 'pages/custom_paint.dart';
 import 'pages/custom_scroll.dart';
@@ -48,6 +48,7 @@ import 'pages/navpage/index.dart';
 import 'pages/trigonal_prism.dart';
 import 'pages/widget_test.dart';
 import 'pages/date_picker.dart';
+import 'pages/word2_color.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({Key? key}) : super(key: key);
@@ -415,6 +416,13 @@ class _MenuPageState extends State<MenuPage> {
                       builder: ((context) => const PlayerButtonPage())));
                 },
                 child: const Text('Player Button'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const ColorSchemePage())));
+                },
+                child: const Text('Color Scheme'),
               ),
               Text(
                 'Hello, World!',
