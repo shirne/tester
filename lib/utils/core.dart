@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 extension NullableList<E> on List<E> {
   E? get firstOrNull => isEmpty ? null : this[0];
 
@@ -59,4 +61,15 @@ extension DateTimeUtil on DateTime {
     }
     return DateTime(year, month, endDay, 23, 59, 59, 999, 0);
   }
+}
+
+extension IntExt on int {
+  String toHex([int length = 2]) => toRadixString(16).padLeft(length, '0');
+}
+
+extension ColorExt on Color {
+  String toRgb([String typeName = 'Color']) =>
+      '$typeName(${(r * 255).toInt()},${(g * 255).toInt()},${(b * 255).toInt()})';
+  String toHex([String prefix = '#']) =>
+      '$prefix${(r * 255).toInt().toHex(2)}${(g * 255).toInt().toHex(2)}${(b * 255).toInt().toHex(2)}';
 }

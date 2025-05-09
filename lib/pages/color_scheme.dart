@@ -1,6 +1,9 @@
+import 'package:flutest/utils/core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:shirne_dialog/shirne_dialog.dart';
 
 class ColorSchemePage extends StatefulWidget {
   const ColorSchemePage({super.key});
@@ -36,37 +39,59 @@ class _ColorSchemePageState extends State<ColorSchemePage> {
       padding: const EdgeInsets.all(4.0),
       child: AspectRatio(
         aspectRatio: 1,
-        child: Container(
-          decoration: BoxDecoration(
-            color: background,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          padding: EdgeInsets.all(8),
-          child: Column(
-            children: [
-              FittedBox(
-                child: Text(
-                  title,
-                  softWrap: false,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: foreground,
-                  ),
+        child: GestureDetector(
+          onTap: () {
+            MyDialog.alert(Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: background.toHex()));
+                    MyDialog.toast('已复制到剪贴板');
+                  },
+                  child: Text('Background: ${background.toHex()}'),
                 ),
-              ),
-              Expanded(
-                child: Center(
+                GestureDetector(
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: foreground.toHex()));
+                    MyDialog.toast('已复制到剪贴板');
+                  },
+                  child: Text('Foreground: ${foreground.toHex()}'),
+                ),
+              ],
+            ));
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              color: background,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            padding: EdgeInsets.all(8),
+            child: Column(
+              children: [
+                FittedBox(
                   child: Text(
-                    '这是一段文本 这是一段文本 这是一段文本 这是一段文本',
+                    title,
+                    softWrap: false,
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 16,
                       color: foreground,
                     ),
                   ),
                 ),
-              ),
-              if (plus != null) FittedBox(child: plus),
-            ],
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      '这是一段文本 这是一段文本 (${foreground.toHex()})',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: foreground,
+                      ),
+                    ),
+                  ),
+                ),
+                if (plus != null) FittedBox(child: plus),
+              ],
+            ),
           ),
         ),
       ),
@@ -221,13 +246,9 @@ class _ColorSchemePageState extends State<ColorSchemePage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(
-                            'Color(${(color.r * 255).toInt()},${(color.g * 255).toInt()},${(color.b * 255).toInt()})',
-                          ),
+                          Text(color.toRgb()),
                           SizedBox(width: 8),
-                          Text(
-                            '#${(color.r * 255).toInt().toRadixString(16).padLeft(2, '0')}${(color.g * 255).toInt().toRadixString(16).padLeft(2, '0')}${(color.b * 255).toInt().toRadixString(16).padLeft(2, '0')}',
-                          ),
+                          Text(color.toHex()),
                           SizedBox(width: 8),
                           Container(
                             width: 30,
