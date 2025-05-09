@@ -81,7 +81,7 @@ class _ColorSchemePageState extends State<ColorSchemePage> {
                 Expanded(
                   child: Center(
                     child: Text(
-                      '这是一段文本 这是一段文本 (${foreground.toHex()})',
+                      '此处使用的颜色 (${foreground.toHex()}/${background.toHex()})',
                       style: TextStyle(
                         fontSize: 12,
                         color: foreground,
