@@ -8,15 +8,24 @@ class CustomPaintPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Custom paint')),
-      body: CustomPaint(
-        painter: Sky(),
-        child: const Center(
-          child: Text(
-            'Once upon a time...',
-            style: TextStyle(
-              fontSize: 40.0,
-              fontWeight: FontWeight.w900,
-              color: Color(0xFFFFFFFF),
+      body: Container(
+        decoration: BoxDecoration(
+          color: Colors.red,
+        ),
+        alignment: Alignment.topCenter,
+        child: SizedBox(
+          height: 400,
+          child: CustomPaint(
+            painter: Sky(),
+            child: const Center(
+              child: Text(
+                'Once upon a time...',
+                style: TextStyle(
+                  fontSize: 40.0,
+                  fontWeight: FontWeight.w900,
+                  color: Color(0xFFFFFFFF),
+                ),
+              ),
             ),
           ),
         ),
@@ -28,6 +37,7 @@ class CustomPaintPage extends StatelessWidget {
 class Sky extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
+    canvas.saveLayer(null, Paint());
     final Rect rect = Offset.zero & size;
     const RadialGradient gradient = RadialGradient(
       center: Alignment(0.7, -0.6),
@@ -35,10 +45,18 @@ class Sky extends CustomPainter {
       colors: <Color>[Color(0xFFFFFF00), Color(0xFF0099FF)],
       stops: <double>[0.4, 1.0],
     );
-    canvas.drawRect(
-      rect,
+    canvas.drawCircle(
+      Offset.zero,
+      rect.width,
       Paint()..shader = gradient.createShader(rect),
     );
+
+    // canvas.saveLayer(
+    //   null,
+    //   Paint()
+    //     ..color = Colors.black
+    //     ..blendMode = BlendMode.dstIn,
+    // );
 
     final widthHalf = size.width / 2;
     final heightHalf = size.height / 2;
@@ -51,8 +69,20 @@ class Sky extends CustomPainter {
         ..close(),
       Paint()
         ..color = Colors.white
-        ..style = PaintingStyle.fill,
+        ..style = PaintingStyle.fill
+        ..blendMode = BlendMode.dstOut,
     );
+
+    // canvas.drawCircle(
+    //   Offset(10, 10),
+    //   rect.width * 0.7,
+    //   Paint()
+    //     ..color = Colors.black
+    //     ..blendMode = BlendMode.dstIn,
+    // );
+
+    //canvas.restore();
+    canvas.restore();
   }
 
   @override
